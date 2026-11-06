@@ -1,14 +1,18 @@
 extends CharacterBody3D
 
-const JUMP_VELOCITY = 4.5
+@export_category("Movement")
+@export_group("Velocity")
+@export_range(0.0, 10.0, 0.5, "suffix:m/s") var JUMP_VELOCITY = 4.5
+@export_range(0.0, 20.0, 0.5, "suffix:m/s") var WALK_SPEED = 5.0
+@export_range(0.0, 25.0, 0.5, "suffix:m/s") var SPRINT_SPEED = 9.0
 
-const WALK_SPEED = 5
-const SPRINT_SPEED = 9
+@export_group("Acceleration")
+@export_range(0.0, 100.0, 1.0, "suffix:m/s/s") var GROUND_ACCELERATION = 50.0
+@export_range(0.0, 75.0, 1.0, "suffix:m/s/s") var GROUND_FRICTION = 25.0
+@export_range(0.0, 20.0, 0.1, "suffix:m/s/s") var AIR_ACCELERATION = 3.0
+@export_range(0.0, 5.0, 0.05, "suffix:m/s/s") var AIR_FRICTION = 0.2
 
-const GROUND_ACCELERATION = 25
-const GROUND_FRICTION = 25
-const AIR_ACCELERATION = 3
-const AIR_FRICTION = 0.2
+const GROUND_TURN_GRIP = 35.0
 
 var mouse_sensitivity: float = 0.002
 
@@ -48,7 +52,7 @@ func _physics_process(delta):
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	# Player should move faster forwards
-	var forward_amount = maxf(0.0, -input_dir.y)
+	var backward_amount = maxf(0.0, input_dir.y)
 	
 	var horizontal_velocity = Vector3(
 		velocity.x, 0, velocity.z
@@ -57,15 +61,53 @@ func _physics_process(delta):
 	var acceleration = GROUND_ACCELERATION if grounded else AIR_ACCELERATION
 	var friction = GROUND_FRICTION if grounded else AIR_FRICTION
 	
-	var target_speed = lerpf(WALK_SPEED - 2.0, WALK_SPEED, forward_amount)
+	var target_speed = WALK_SPEED
 	if grounded and Input.is_action_pressed("sprint"):
-		target_speed = lerpf(SPRINT_SPEED - 1.0, SPRINT_SPEED, forward_amount)
+		target_speed = SPRINT_SPEED
+	
+	# Make walking backwards just slightly slower
+	target_speed += lerpf(1.0, 0.9, backward_amount)
+	"""
+	# Ground movement
+	if grounded:
+		if direction != Vector3.ZERO:
+			var desired_velocity = direction * target_speed
+			
+			horizontal_velocity = horizontal_velocity.move_toward(
+				desired_velocity,
+				GROUND_ACCELERATION * delta
+			)
+		else:
+			horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO,
+			GROUND_FRICTION * delta)
+	else:
+		# Air movement
+		horizontal_velocity = horizontal_velocity.move_toward(
+		Vector3.ZERO,
+		AIR_FRICTION * delta)
+		
+		if direction != Vector3.ZERO:
+			var speed_in_dir = horizontal_velocity.dot(direction)
+			var speed_to_add = target_speed - speed_in_dir
+			
+			if speed_to_add > 0:
+				var acceleration_step = min(
+					AIR_ACCELERATION * delta,
+					speed_to_add
+				)
+				"""
 	
 	# Apply friction
 	horizontal_velocity = horizontal_velocity.move_toward(
 		Vector3.ZERO,
 		friction * delta
 	)
+	
+	if grounded and direction != Vector3.ZERO:
+		var parallel_velocity = direction * horizontal_velocity.dot(direction)
+		var sideways_velocity = horizontal_velocity - parallel_velocity
+		
+		horizontal_velocity -= sideways_velocity.limit_length(GROUND_TURN_GRIP * delta)
 	
 	# Apply movement acceleration
 	if direction != Vector3.ZERO:
@@ -75,7 +117,7 @@ func _physics_process(delta):
 		
 		if speed_to_add > 0:
 			var acceleration_step = min(
-				lerpf(acceleration - 1.0, acceleration, forward_amount) * delta,
+				acceleration * delta,
 				speed_to_add
 			)
 			
