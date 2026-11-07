@@ -6,7 +6,7 @@
 script = ExtResource("1_iq5s8")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="." unique_id=1816987005]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 use_collision = true
-polygon = PackedVector2Array(0, 0, 2, 0, 2, 2)
+polygon = PackedVector2Array(0, 0, 4, 0, 4, 1)
 depth = 2.0

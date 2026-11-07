@@ -26,6 +26,7 @@ var sliding = false
 var standing_head_y: float
 
 @onready var head = $Head
+@onready var raycast = $Head/RayCast3D
 
 func _ready() -> void:
 	standing_head_y = head.position.y
@@ -42,6 +43,14 @@ func _unhandled_input(event) -> void:
 				deg_to_rad(-85),
 				deg_to_rad(85)
 			)
+			
+	elif event.is_action_pressed("interact"):
+		if raycast.is_colliding():
+			var target = raycast.get_collider()
+			
+			if target.has_method("interact"):
+				target.interact()
+
 
 	if Input.is_action_just_pressed("escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

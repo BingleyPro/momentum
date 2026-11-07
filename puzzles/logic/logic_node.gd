@@ -18,6 +18,7 @@ func _ready() -> void:
 	evaluate()
 				
 func _on_input_changed(_state) -> void:
+	print("Evaluate")
 	evaluate()
 
 func evaluate() -> void:
@@ -28,10 +29,18 @@ func evaluate() -> void:
 		if not is_instance_valid(input_node):
 			return
 			
-		states.append(input_node.get("is_on"))
+		var value = input_node.get("is_on")
+		
+		if typeof(value) != TYPE_BOOL:
+			push_warning("Logic input must have a boolean is_on property.")
+			return
+			
+		states.append(value)
 		
 	if states.is_empty():
 		return
+		
+	print(states)
 		
 	var result = false
 	
@@ -55,12 +64,13 @@ func evaluate() -> void:
 			result = not states[0]
 			
 	
-	if result != is_on:
-		is_on = result
+	var changed = result != is_on
+	is_on = result
 		
-		for output_node in outputs:
-			if is_instance_valid(output_node):
-				if output_node.has_method("set_active"):
-					output_node.set_active(is_on)
+	for output_node in outputs:
+		if is_instance_valid(output_node):
+			if output_node.has_method("set_active"):
+				output_node.set_active(is_on)
 					
+	if changed:
 		state_update.emit(is_on)

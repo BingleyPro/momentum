@@ -3,7 +3,7 @@ extends Node3D
 
 # Temp script for finding good ramp dimensions
 
-@export_group("Dinensions")
+@export_group("Dimensions")
 
 @export_range(1.0, 20.0, 1.0, "suffix:m") var ramp_length = 4.0:
 	set(value):
