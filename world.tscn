@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cm13yd7dn1uuk" path="res://player/player.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://dyveg34l3vodn" path="res://assets/materials/industrial_abandonedfactory_wall_brick_xertcc2_2k/xertcc2_2K_Basecolor.jpg" id="2_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://b1qqoiq2j0o8a" path="res://assets/hdris/citrus_orchard_puresky_4k.hdr" id="2_k3n1d"]
 [ext_resource type="Texture2D" uid="uid://dtx63dgeb8146" path="res://assets/materials/industrial_abandonedfactory_wall_brick_xertcc2_2k/xertcc2_2K_AO.jpg" id="3_036b0"]
 [ext_resource type="Texture2D" uid="uid://drew8c8iyljra" path="res://assets/materials/industrial_abandonedfactory_wall_brick_xertcc2_2k/xertcc2_2K_Normal.jpg" id="4_dwbse"]
 [ext_resource type="Texture2D" uid="uid://cwqodaf6qnvi1" path="res://assets/materials/industrial_abandonedfactory_wall_brick_xertcc2_2k/xertcc2_2K_Displacement.jpg" id="4_pkg7o"]
@@ -11,20 +12,33 @@
 [ext_resource type="Texture2D" uid="uid://bjl4oq6xj2j3r" path="res://assets/materials/painted_ceramic_tiles_tkwnbiaaw_2k/Painted_Ceramic_Tiles_tkwnbiaaw_2K_Displacement.jpg" id="9_2o6r5"]
 [ext_resource type="Texture2D" uid="uid://jce1k0xojsc3" path="res://assets/materials/painted_ceramic_tiles_tkwnbiaaw_2k/Painted_Ceramic_Tiles_tkwnbiaaw_2K_Normal.jpg" id="10_70uel"]
 [ext_resource type="Texture2D" uid="uid://cuvx0xjwcgcx6" path="res://assets/materials/painted_ceramic_tiles_tkwnbiaaw_2k/Painted_Ceramic_Tiles_tkwnbiaaw_2K_Roughness.jpg" id="11_hiqwa"]
+[ext_resource type="PackedScene" uid="uid://cx7ctucrawqg0" path="res://building/floor_2m.tscn" id="13_70uel"]
+[ext_resource type="PackedScene" uid="uid://d0wsxwxx40cag" path="res://building/wall_2m.tscn" id="14_hiqwa"]
+[ext_resource type="PackedScene" uid="uid://dtmx8kt1e2gai" path="res://building/ramp.tscn" id="16_2u3nc"]
+[ext_resource type="PackedScene" uid="uid://caqk56m6ipwxg" path="res://building/wall_corner_2m.tscn" id="16_udxuc"]
+[ext_resource type="PackedScene" uid="uid://mr6amriakogw" path="res://building/door_frame_2m.tscn" id="17_udxuc"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o2qjk"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2o6r5"]
+panorama = ExtResource("2_k3n1d")
 
-[sub_resource type="Sky" id="Sky_dhdjk"]
-sky_material = SubResource("ProceduralSkyMaterial_o2qjk")
+[sub_resource type="Sky" id="Sky_k3n1d"]
+sky_material = SubResource("PanoramaSkyMaterial_2o6r5")
 
-[sub_resource type="Environment" id="Environment_tb07l"]
+[sub_resource type="Environment" id="Environment_ic0uy"]
 background_mode = 2
-sky = SubResource("Sky_dhdjk")
+sky = SubResource("Sky_k3n1d")
 ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 4
+tonemap_exposure = 0.8
+tonemap_agx_contrast = 1.4
 ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_2o6r5"]
+exposure_multiplier = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oul6g"]
 albedo_texture = ExtResource("2_aqk2v")
@@ -75,7 +89,8 @@ size = Vector3(80, 1, 80)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9543686, 1.5, 1.2974281)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=841303244]
-environment = SubResource("Environment_tb07l")
+environment = SubResource("Environment_ic0uy")
+camera_attributes = SubResource("CameraAttributesPractical_2o6r5")
 
 [node name="Objects" type="Node3D" parent="." unique_id=610253126]
 
@@ -137,10 +152,69 @@ mesh = SubResource("BoxMesh_f3sb7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7)
 shape = SubResource("BoxShape3D_fj7yv")
 
+[node name="Floor" parent="Objects/StaticBody3D4" unique_id=1983484256 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.612953, 1, 8.078438)
+
+[node name="Floor2" parent="Objects/StaticBody3D4" unique_id=1209322341 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.612953, 1, 6.078438)
+
+[node name="Floor3" parent="Objects/StaticBody3D4" unique_id=1875805844 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.612953, 1, 8.078438)
+
+[node name="Floor4" parent="Objects/StaticBody3D4" unique_id=1597423719 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.612953, 1, 6.078438)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=863461427]
 transform = Transform3D(0.77356577, -0.011823015, 0.6336058, -0.63371605, -0.014432142, 0.7734311, 0, -0.99982595, -0.018656645, 0, 0, 0)
 shadow_enabled = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=978835216]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.74415, 4.0475945, -44.279736)
-shadow_enabled = true
+[node name="Wall" parent="." unique_id=438450282 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28, 1, -42)
+
+[node name="Wall4" parent="." unique_id=731503351 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28, 4, -42)
+
+[node name="Wall2" parent="." unique_id=1758194087 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28, 1, -46)
+
+[node name="Floor" parent="." unique_id=800492668 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 1, -44)
+
+[node name="Floor2" parent="." unique_id=468066156 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, -44)
+
+[node name="Ramp" parent="." unique_id=1940187484 instance=ExtResource("16_2u3nc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1, -43)
+
+[node name="Floor3" parent="." unique_id=1755956196 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1, -51)
+
+[node name="Floor4" parent="." unique_id=487697409 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1, -53)
+
+[node name="Wall3" parent="." unique_id=710535613 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1, -53)
+
+[node name="Wall9" parent="." unique_id=1212187464 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, -53)
+
+[node name="Wall5" parent="." unique_id=501426791 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 1, -51)
+
+[node name="Wall6" parent="." unique_id=1617706695 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 1, -49)
+
+[node name="Wall7" parent="." unique_id=1605897461 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -22, 1, -49)
+
+[node name="Floor5" parent="." unique_id=134492137 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, -53)
+
+[node name="Corner Wall" parent="." unique_id=1910352674 instance=ExtResource("16_udxuc")]
+transform = Transform3D(-9.934766e-08, 0, -1, 0, 1, 0, 1, 0, -9.934766e-08, -22, 1, -51)
+
+[node name="Floor6" parent="." unique_id=1710331005 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 4, -51)
+
+[node name="Door Frame" parent="." unique_id=1400316715 instance=ExtResource("17_udxuc")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -26, 1, -42)
