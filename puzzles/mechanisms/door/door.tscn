@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bbqyh1g0y2o23"]
+
+[ext_resource type="Script" uid="uid://dlum44f4jg5ph" path="res://puzzles/mechanisms/door/door.gd" id="1_aoj0b"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p0m8r"]
+size = Vector3(1.6, 2.8, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p0m8r"]
+albedo_color = Color(0, 0.82768506, 0.828334, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
+size = Vector3(1.6, 2.8, 0.1)
+
+[sub_resource type="Animation" id="Animation_aoj0b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p0m8r"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-2, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aoj0b"]
+_data = {
+&"RESET": SubResource("Animation_aoj0b"),
+&"open": SubResource("Animation_p0m8r")
+}
+
+[node name="Door" type="Node3D" unique_id=1002102877]
+script = ExtResource("1_aoj0b")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="." unique_id=1131334664]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D" unique_id=172878039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.4, -0.1)
+mesh = SubResource("BoxMesh_p0m8r")
+surface_material_override/0 = SubResource("StandardMaterial3D_p0m8r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D" unique_id=1594945291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.4, -0.1)
+shape = SubResource("BoxShape3D_tb07l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2108706558]
+libraries/ = SubResource("AnimationLibrary_aoj0b")

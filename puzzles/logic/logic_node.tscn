@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c6ppkc81srv00"]
+
+[ext_resource type="Script" uid="uid://bnmgmlsmnkg0" path="res://puzzles/logic/logic_node.gd" id="1_lm5ll"]
+
+[node name="LogicNode" type="Marker3D" unique_id=241406680]
+script = ExtResource("1_lm5ll")

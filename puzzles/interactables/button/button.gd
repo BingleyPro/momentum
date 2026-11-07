@@ -1,9 +1,9 @@
 extends StaticBody3D
 
-signal pressed()
+signal state_update(state: bool)
 
 @export var is_usable = true
 
 func interact() -> void:
 	if is_usable:
-		pressed.emit()
+		state_update.emit(true)

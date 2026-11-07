@@ -15,10 +15,13 @@
 [ext_resource type="PackedScene" uid="uid://cx7ctucrawqg0" path="res://building/floor_2m.tscn" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://duq1n5xrbodnx" path="res://puzzles/interactables/pressure_plate/pressure_plate.tscn" id="14_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://d0wsxwxx40cag" path="res://building/wall_2m.tscn" id="14_hiqwa"]
+[ext_resource type="PackedScene" uid="uid://jldhvsti4iwv" path="res://puzzles/moveable/box/box.tscn" id="15_bc84e"]
 [ext_resource type="PackedScene" uid="uid://dtmx8kt1e2gai" path="res://building/ramp.tscn" id="16_2u3nc"]
 [ext_resource type="PackedScene" uid="uid://caqk56m6ipwxg" path="res://building/wall_corner_2m.tscn" id="16_udxuc"]
 [ext_resource type="PackedScene" uid="uid://mr6amriakogw" path="res://building/door_frame_2m.tscn" id="17_udxuc"]
 [ext_resource type="PackedScene" uid="uid://dajm0ciabxvxu" path="res://building/pillar.tscn" id="18_ikiii"]
+[ext_resource type="PackedScene" uid="uid://bbqyh1g0y2o23" path="res://puzzles/mechanisms/door/door.tscn" id="20_26xuy"]
+[ext_resource type="PackedScene" uid="uid://c6ppkc81srv00" path="res://puzzles/logic/logic_node.tscn" id="22_wukud"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2o6r5"]
 panorama = ExtResource("2_k3n1d")
@@ -88,7 +91,7 @@ size = Vector3(80, 1, 80)
 [node name="World" type="Node3D" unique_id=278102239]
 
 [node name="Player" parent="." unique_id=1333248885 instance=ExtResource("1_f3sb7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9543686, 1.5, 1.2974281)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.045631, 1.5, -37.70257)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=841303244]
 environment = SubResource("Environment_ic0uy")
@@ -169,12 +172,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.612953, 1, 6.078438)
 [node name="PressurePlate" parent="Objects/StaticBody3D4" unique_id=929839850 instance=ExtResource("14_cbp6q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.612953, 1, 9.078438)
 
+[node name="Box" parent="Objects/StaticBody3D4" unique_id=914197217 instance=ExtResource("15_bc84e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.612953, 1, 9.078438)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=863461427]
 transform = Transform3D(0.77356577, -0.011823015, 0.6336058, -0.63371605, -0.014432142, 0.7734311, 0, -0.99982595, -0.018656645, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Wall" parent="." unique_id=438450282 instance=ExtResource("14_hiqwa")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28, 1, -42)
+
+[node name="Wall8" parent="." unique_id=1525060462 instance=ExtResource("14_hiqwa")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -24, 1, -42)
 
 [node name="Wall4" parent="." unique_id=731503351 instance=ExtResource("14_hiqwa")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28, 4, -42)
@@ -184,6 +193,9 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -28,
 
 [node name="Floor" parent="." unique_id=800492668 instance=ExtResource("13_70uel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 1, -44)
+
+[node name="Floor7" parent="." unique_id=415856451 instance=ExtResource("13_70uel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 1, -42)
 
 [node name="Floor2" parent="." unique_id=468066156 instance=ExtResource("13_70uel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, -44)
@@ -226,3 +238,11 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -26,
 
 [node name="Pillar" parent="." unique_id=1403572259 instance=ExtResource("18_ikiii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 1, -44)
+
+[node name="Door" parent="." unique_id=1002102877 instance=ExtResource("20_26xuy")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -26, 1, -42)
+
+[node name="LogicNode" parent="." unique_id=241406680 node_paths=PackedStringArray("inputs", "outputs") instance=ExtResource("22_wukud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 3, -44)
+inputs = [NodePath("../Objects/StaticBody3D4/PressurePlate")]
+outputs = [NodePath("../Door")]
