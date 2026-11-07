@@ -9,8 +9,8 @@ extends CharacterBody3D
 @export_group("Acceleration")
 @export_range(0.0, 100.0, 1.0, "suffix:m/s/s") var GROUND_ACCELERATION = 50.0
 @export_range(0.0, 75.0, 1.0, "suffix:m/s/s") var GROUND_FRICTION = 25.0
-@export_range(0.0, 20.0, 0.1, "suffix:m/s/s") var AIR_ACCELERATION = 3.0
-@export_range(0.0, 5.0, 0.05, "suffix:m/s/s") var AIR_FRICTION = 0.2
+@export_range(0.0, 10.0, 0.1, "suffix:m/s/s") var AIR_ACCELERATION = 3.0
+@export_range(0.0, 1.0, 0.05, "suffix:m/s/s") var AIR_FRICTION = 0.2
 
 @export_group("Sliding")
 @export_range(0.0, 20.0, 0.5, "suffix:m/s") var SLIDE_MIN_SPEED = 6.0
@@ -19,10 +19,11 @@ extends CharacterBody3D
 @export_range(0.0, 3.0, 0.05, "suffix:m") var SLIDE_CAMERA_DROP = 0.7
 @export_range(0.0, 10.0, 1.0, "suffix:m/s") var CAMERA_TRANSITION_SPEED = 5.0
 
+@export_category("Settings")
+@export var mouse_sensitivity: float = 0.002
+
 var sliding = false
 var standing_head_y: float
-
-var mouse_sensitivity: float = 0.002
 
 @onready var head = $Head
 

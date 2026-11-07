@@ -17,3 +17,6 @@ mono_crash.*.json
 
 # Wakatime
 addons/godot_super-wakatime/
+
+# Materials
+assets/materials
