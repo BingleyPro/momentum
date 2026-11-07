@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://jce1k0xojsc3" path="res://assets/materials/painted_ceramic_tiles_tkwnbiaaw_2k/Painted_Ceramic_Tiles_tkwnbiaaw_2K_Normal.jpg" id="10_70uel"]
 [ext_resource type="Texture2D" uid="uid://cuvx0xjwcgcx6" path="res://assets/materials/painted_ceramic_tiles_tkwnbiaaw_2k/Painted_Ceramic_Tiles_tkwnbiaaw_2K_Roughness.jpg" id="11_hiqwa"]
 [ext_resource type="PackedScene" uid="uid://cx7ctucrawqg0" path="res://building/floor_2m.tscn" id="13_70uel"]
+[ext_resource type="PackedScene" uid="uid://duq1n5xrbodnx" path="res://puzzles/interactables/pressure_plate/pressure_plate.tscn" id="14_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://d0wsxwxx40cag" path="res://building/wall_2m.tscn" id="14_hiqwa"]
 [ext_resource type="PackedScene" uid="uid://dtmx8kt1e2gai" path="res://building/ramp.tscn" id="16_2u3nc"]
 [ext_resource type="PackedScene" uid="uid://caqk56m6ipwxg" path="res://building/wall_corner_2m.tscn" id="16_udxuc"]
@@ -164,6 +165,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.612953, 1, 8.078438)
 
 [node name="Floor4" parent="Objects/StaticBody3D4" unique_id=1597423719 instance=ExtResource("13_70uel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.612953, 1, 6.078438)
+
+[node name="PressurePlate" parent="Objects/StaticBody3D4" unique_id=929839850 instance=ExtResource("14_cbp6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.612953, 1, 9.078438)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=863461427]
 transform = Transform3D(0.77356577, -0.011823015, 0.6336058, -0.63371605, -0.014432142, 0.7734311, 0, -0.99982595, -0.018656645, 0, 0, 0)

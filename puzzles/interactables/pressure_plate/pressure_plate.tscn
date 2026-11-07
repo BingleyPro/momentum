@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://duq1n5xrbodnx"]
+
+[ext_resource type="Script" uid="uid://didy6kfweth48" path="res://puzzles/interactables/pressure_plate/pressure_plate.gd.gd" id="1_nhnwx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_372mo"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_372mo"]
+albedo_color = Color(0.92941177, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
+size = Vector3(0.9, 0.1, 0.9)
+
+[sub_resource type="Animation" id="Animation_372mo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.05, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.92941177, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nhnwx"]
+resource_name = "press"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.05, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh:surface_material_override/0:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.92941177, 0, 0, 1), Color(0.060202956, 0.64215094, 9.62615e-07, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ivhc"]
+_data = {
+&"RESET": SubResource("Animation_372mo"),
+&"press": SubResource("Animation_nhnwx")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nhnwx"]
+size = Vector3(1, 0.1, 1)
+
+[node name="PressurePlate" type="Node3D" unique_id=929839850]
+script = ExtResource("1_nhnwx")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=759516211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("BoxMesh_372mo")
+surface_material_override/0 = SubResource("StandardMaterial3D_372mo")
+
+[node name="Detector" type="Area3D" parent="." unique_id=1801605966]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector" unique_id=1806469580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("BoxShape3D_tb07l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1291816291]
+libraries/ = SubResource("AnimationLibrary_4ivhc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=435806133]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1785454311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_nhnwx")

@@ -4,3 +4,4 @@
 
 [node name="Lever" type="StaticBody3D" unique_id=864472295]
 script = ExtResource("1_1psba")
+inputs = [NodePath(""), null]

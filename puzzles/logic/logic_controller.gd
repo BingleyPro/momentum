@@ -1,11 +1,13 @@
 extends Node
 
-signal pressed()
+signal state_update(state: bool)
 
-@export var inputs = []
+enum GateType {AND, OR, NOT}
 
-@export var is_usable = true
+@export var inputs: Array[NodePath]
+@export var type: GateType = GateType.AND
+
+var is_on: bool = false
 
 func interact() -> void:
-	if is_usable:
-		pressed.emit()
+	state_update.emit(true)
