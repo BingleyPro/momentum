@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dtmx8kt1e2gai" path="res://building/ramp.tscn" id="16_2u3nc"]
 [ext_resource type="PackedScene" uid="uid://caqk56m6ipwxg" path="res://building/wall_corner_2m.tscn" id="16_udxuc"]
 [ext_resource type="PackedScene" uid="uid://mr6amriakogw" path="res://building/door_frame_2m.tscn" id="17_udxuc"]
+[ext_resource type="PackedScene" uid="uid://dajm0ciabxvxu" path="res://building/pillar.tscn" id="18_ikiii"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2o6r5"]
 panorama = ExtResource("2_k3n1d")
@@ -218,3 +219,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 4, -51)
 
 [node name="Door Frame" parent="." unique_id=1400316715 instance=ExtResource("17_udxuc")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -26, 1, -42)
+
+[node name="Pillar" parent="." unique_id=1403572259 instance=ExtResource("18_ikiii")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 1, -44)

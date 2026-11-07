@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b0mj5dk82ffef"]
+
+[ext_resource type="Script" uid="uid://cdnmn1wqqu7qp" path="res://puzzles/logic/logic_controller.gd" id="1_1psba"]
+
+[node name="Lever" type="StaticBody3D" unique_id=864472295]
+script = ExtResource("1_1psba")
