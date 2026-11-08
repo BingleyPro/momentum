@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://d0wsxwxx40cag" path="res://building/wall_2m.tscn" id="6_ed0h8"]
 [ext_resource type="PackedScene" uid="uid://mr6amriakogw" path="res://building/door_frame_2m.tscn" id="7_x5epe"]
 [ext_resource type="PackedScene" uid="uid://bbqyh1g0y2o23" path="res://puzzles/mechanisms/door/door.tscn" id="8_xq8ic"]
-[ext_resource type="PackedScene" uid="uid://b0mj5dk82ffef" path="res://puzzles/interactables/lever/lever.tscn" id="9_x5epe"]
 [ext_resource type="PackedScene" uid="uid://c6ppkc81srv00" path="res://puzzles/logic/logic_node.tscn" id="10_xq8ic"]
 [ext_resource type="PackedScene" uid="uid://tsspptg7w1ba" path="res://building/wall_1m.tscn" id="11_w7224"]
 [ext_resource type="PackedScene" uid="uid://duq1n5xrbodnx" path="res://puzzles/interactables/pressure_plate/pressure_plate.tscn" id="12_py2r8"]
@@ -571,12 +570,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -1)
 [node name="DoorA" parent="." unique_id=1002102877 instance=ExtResource("8_xq8ic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -1)
 
-[node name="LeverA" parent="." unique_id=864472295 instance=ExtResource("9_x5epe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 2)
-
 [node name="LogicNode" parent="." unique_id=241406680 node_paths=PackedStringArray("inputs", "outputs") instance=ExtResource("10_xq8ic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 1, 0)
-inputs = [NodePath("../LeverA")]
+inputs = [NodePath("../Button")]
 outputs = [NodePath("../DoorA")]
 
 [node name="Ramp2" parent="." unique_id=1425304388 instance=ExtResource("4_kxijb")]
@@ -663,13 +659,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -1, -48)
 inputs = [NodePath("../PressurePlate")]
 outputs = [NodePath("../DoorC")]
 
-[node name="Lever" parent="." unique_id=832054227 instance=ExtResource("9_x5epe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.543453, -2.0899515, -46.454594)
-
 [node name="LogicNode3" parent="." unique_id=1312209189 node_paths=PackedStringArray("inputs", "outputs") instance=ExtResource("10_xq8ic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -3, -42)
 gate_type = 2
-inputs = [NodePath("../Lever"), NodePath("../PressurePlate2")]
+inputs = [NodePath("../Button1"), NodePath("../PressurePlate2")]
 outputs = [NodePath("../DoorB")]
 
 [node name="ButtonD" parent="." unique_id=1719936494 instance=ExtResource("14_wrqhy")]
@@ -754,5 +747,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -2, -43)
 inputs = [NodePath("../ButtonD")]
 outputs = [NodePath("../DoorD")]
 
-[node name="Checkpoint" parent="." unique_id=1716444885 instance=ExtResource("16_7i3qh")]
+[node name="Checkpoint" parent="." unique_id=1716444885 node_paths=PackedStringArray("reset_nodes") instance=ExtResource("16_7i3qh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -31, -3, -44)
+reset_nodes = [NodePath("../ButtonD"), NodePath("../Button1"), NodePath("../Button"), NodePath("../Box")]
+
+[node name="Button1" parent="." unique_id=1882139418 instance=ExtResource("14_wrqhy")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -25.624, -3, -46.2)
+
+[node name="Button" parent="." unique_id=723124119 instance=ExtResource("14_wrqhy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -0.39145076, -1)

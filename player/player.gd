@@ -56,7 +56,9 @@ func _ready() -> void:
 		queue_free()
 		
 	if start_at_checkpoint:
-		self.activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"), start_at_checkpoint)
+		start_at_checkpoint.save_puzzle_state()
+		
+		activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"), start_at_checkpoint)
 		respawn()
 	
 func _unhandled_input(event) -> void:
@@ -137,12 +139,20 @@ func activate_checkpoint(spawn: Transform3D, number: int, checkpoint) -> void:
 		checkpoint_number = number
 	
 func respawn() -> void:
+	if is_instance_valid(held_object):
+		drop_object()
+		
+	if is_instance_valid(current_checkpoint):
+		current_checkpoint.restore_puzzle_state()
+	
 	global_transform = checkpoint_location
 	velocity = Vector3.ZERO
 	sliding = false
+	head.position.y = standing_head_y
+	head.rotation.x = 0.0
 	
-	current_checkpoint.restore_puzzle_state()
-
+	reset_physics_interpolation()
+	
 func _physics_process(delta):
 	var grounded = is_on_floor()
 	
