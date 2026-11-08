@@ -10,3 +10,10 @@ func interact() -> void:
 		is_on = not is_on
 		
 		state_update.emit(is_on)
+
+func get_checkpoint_state():
+	return is_on
+	
+func restore_checkpoint_state(state):
+	is_on = state
+	state_update.emit(is_on)

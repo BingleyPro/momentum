@@ -549,9 +549,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -3, 1)
 ramp_width = 4.0
 ramp_height = 3.0
 
-[node name="Player" parent="." unique_id=1333248885 node_paths=PackedStringArray("start_at_checkpoint") instance=ExtResource("5_53p8g")]
+[node name="Player" parent="." unique_id=1333248885 instance=ExtResource("5_53p8g")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1, 1, 1)
-start_at_checkpoint = NodePath("../Checkpoint")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=608233909]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
@@ -756,4 +755,4 @@ inputs = [NodePath("../ButtonD")]
 outputs = [NodePath("../DoorD")]
 
 [node name="Checkpoint" parent="." unique_id=1716444885 instance=ExtResource("16_7i3qh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -2, -44)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -31, -3, -44)

@@ -38,6 +38,7 @@ var sliding = false
 var standing_head_y: float
 
 var checkpoint_number = 0
+var current_checkpoint = null
 
 @onready var head = $Head
 @onready var raycast = $Head/RayCast3D
@@ -55,7 +56,8 @@ func _ready() -> void:
 		queue_free()
 		
 	if start_at_checkpoint:
-		self.activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"))
+		self.activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"), start_at_checkpoint)
+		respawn()
 	
 func _unhandled_input(event) -> void:
 	if event is InputEventMouseMotion:
@@ -126,18 +128,20 @@ func drop_object() -> void:
 	
 	held_object = null
 	
-func activate_checkpoint(spawn: Transform3D, number: int) -> void:
+func activate_checkpoint(spawn: Transform3D, number: int, checkpoint) -> void:
 	checkpoint_location = spawn
+	
+	current_checkpoint = checkpoint
 	
 	if number:
 		checkpoint_number = number
-	
-	respawn()
 	
 func respawn() -> void:
 	global_transform = checkpoint_location
 	velocity = Vector3.ZERO
 	sliding = false
+	
+	current_checkpoint.restore_puzzle_state()
 
 func _physics_process(delta):
 	var grounded = is_on_floor()

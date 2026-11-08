@@ -5,12 +5,30 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_lpkyi"]
 size = Vector3(2, 3, 2)
 
+[sub_resource type="BoxMesh" id="BoxMesh_tb07l"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48e1g"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.14117648, 1, 0.10980392, 0.1254902)
+
 [node name="Checkpoint" type="Area3D" unique_id=1716444885]
 script = ExtResource("1_48e1g")
 checkpoint_number = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=780954460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("BoxShape3D_lpkyi")
 
 [node name="SpawnLocation" type="Marker3D" parent="." unique_id=2062591375]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SpawnDirection" type="RayCast3D" parent="SpawnLocation" unique_id=1208053872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+enabled = false
+target_position = Vector3(0, 0, -3)
+
+[node name="TriggerPreview" type="MeshInstance3D" parent="." unique_id=258559720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_tb07l")
+surface_material_override/0 = SubResource("StandardMaterial3D_48e1g")

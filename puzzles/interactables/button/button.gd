@@ -10,8 +10,8 @@ enum ButtonType {Toggle, Timed}
 
 var is_on = false
 
-@onready var animation_player = $AnimationPlayer
-@onready var timer = $Timer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var timer: Timer = $Timer
 
 func interact() -> void:
 	if is_usable:
@@ -36,3 +36,22 @@ func update_state(new_state) -> void:
 
 func _on_timer_timeout():
 	update_state(false)
+
+func get_checkpoint_state():
+	return {
+		"is_on": is_on,
+		"time_left": timer.time_left
+	}
+	
+func restore_checkpoint_state(state):
+	is_on = state["is_on"]
+	
+	var time_left = state["time_left"]
+	
+	if is_on:
+		animation_player.play("press")
+	else:
+		animation_player.play_backwards("press")
+	
+	if time_left != 0:
+		timer.start(time_left)
