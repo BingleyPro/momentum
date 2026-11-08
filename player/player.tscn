@@ -23,3 +23,6 @@ current = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Head" unique_id=1857165351]
 target_position = Vector3(0, 0, -3)
+
+[node name="HoldPoint" type="Marker3D" parent="Head" unique_id=1271853917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)

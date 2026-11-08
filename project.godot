@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Momentum"
-run/main_scene="uid://cs54faeqky5t8"
+run/main_scene="uid://dh2p3oxxmbj2a"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

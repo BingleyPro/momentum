@@ -22,11 +22,20 @@ extends CharacterBody3D
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
 
+@export_group("Pickup")
+@export var follow_speed = 8.0
+@export var follow_strength = 10.0
+
+var held_object: RigidBody3D = null
+var original_gravity = 1.0
+var original_rotation_lock = false
+
 var sliding = false
 var standing_head_y: float
 
 @onready var head = $Head
 @onready var raycast = $Head/RayCast3D
+@onready var hold_point = $Head/HoldPoint
 
 func _ready() -> void:
 	standing_head_y = head.position.y
@@ -45,18 +54,56 @@ func _unhandled_input(event) -> void:
 			)
 			
 	elif event.is_action_pressed("interact"):
-		if raycast.is_colliding():
-			var target = raycast.get_collider()
+		# If holding object, drop it
+		if is_instance_valid(held_object):
+			drop_object()
+			return
 			
-			if target.has_method("interact"):
-				target.interact()
+		if not raycast.is_colliding():
+			return
+		
+		var target = raycast.get_collider()
+		
+		if target is RigidBody3D and target.is_in_group("pickupable"):
+			pickup_object(target)
+			
+		elif target.has_method("interact"):
+			target.interact()
 
-
-	if Input.is_action_just_pressed("escape"):
+	elif Input.is_action_just_pressed("escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			
+func pickup_object(object: RigidBody3D) -> void:
+	held_object = object
+	
+	original_gravity = object.gravity_scale
+	original_rotation_lock = object.lock_rotation
+	
+	object.gravity_scale = 0.0
+	object.lock_rotation = true
+	object.linear_velocity = Vector3.ZERO
+	object.angular_velocity = Vector3.ZERO
+	
+	object.add_collision_exception_with(self)
+	self.add_collision_exception_with(object)
+	raycast.add_exception(object)
+	
+func drop_object() -> void:
+	if not is_instance_valid(held_object):
+		held_object = null
+		return
+		
+	held_object.gravity_scale = original_gravity
+	held_object.lock_rotation = original_rotation_lock
+	
+	held_object.remove_collision_exception_with(self)
+	self.remove_collision_exception_with(held_object)
+	raycast.remove_exception(held_object)
+	
+	held_object = null
 
 func _physics_process(delta):
 	var grounded = is_on_floor()
@@ -157,3 +204,19 @@ func _physics_process(delta):
 	
 	# Collisions
 	move_and_slide()
+	
+	# Held object
+	if is_instance_valid(held_object):
+		var displacement = hold_point.global_basis - held_object.global_position
+		
+		if displacement.length() > 3.5:
+			drop_object()
+			return
+		
+		var desired_velocity = displacement * follow_speed
+		
+		var force = (desired_velocity - held_object.linear_velocity) * held_object.mass * follow_strength
+		
+		force = force.limit_lenngth(held_object.mass * 120.0)
+		
+		held_object.apply_central_force(force)
