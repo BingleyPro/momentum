@@ -141,15 +141,15 @@ func activate_checkpoint(spawn: Transform3D, number: int, checkpoint) -> void:
 func respawn() -> void:
 	if is_instance_valid(held_object):
 		drop_object()
-		
-	if is_instance_valid(current_checkpoint):
-		current_checkpoint.restore_puzzle_state()
 	
 	global_transform = checkpoint_location
 	velocity = Vector3.ZERO
 	sliding = false
 	head.position.y = standing_head_y
 	head.rotation.x = 0.0
+	
+	if is_instance_valid(current_checkpoint):
+		current_checkpoint.restore_puzzle_state()
 	
 	reset_physics_interpolation()
 	
