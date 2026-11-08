@@ -21,10 +21,14 @@ extends CharacterBody3D
 
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
+@export var is_active = true
 
 @export_group("Pickup")
 @export var follow_speed = 8.0
 @export var follow_strength = 10.0
+
+@export_category("Debug")
+@export var start_at_checkpoint: Node
 
 var held_object: RigidBody3D = null
 var original_gravity = 1.0
@@ -33,13 +37,25 @@ var original_rotation_lock = false
 var sliding = false
 var standing_head_y: float
 
+var checkpoint_number = 0
+
 @onready var head = $Head
 @onready var raycast = $Head/RayCast3D
 @onready var hold_point = $Head/HoldPoint
 
+var checkpoint_location: Transform3D
+
 func _ready() -> void:
 	standing_head_y = head.position.y
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	checkpoint_location = global_transform
+	
+	if not is_active:
+		queue_free()
+		
+	if start_at_checkpoint:
+		self.activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"))
 	
 func _unhandled_input(event) -> void:
 	if event is InputEventMouseMotion:
@@ -76,6 +92,11 @@ func _unhandled_input(event) -> void:
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			
+	elif Input.is_action_just_pressed("restart"):
+		get_tree().reload_current_scene()
+	elif Input.is_action_just_pressed("respawn"):
+		respawn()
+
 func pickup_object(object: RigidBody3D) -> void:
 	held_object = object
 	
@@ -104,6 +125,19 @@ func drop_object() -> void:
 	raycast.remove_exception(held_object)
 	
 	held_object = null
+	
+func activate_checkpoint(spawn: Transform3D, number: int) -> void:
+	checkpoint_location = spawn
+	
+	if number:
+		checkpoint_number = number
+	
+	respawn()
+	
+func respawn() -> void:
+	global_transform = checkpoint_location
+	velocity = Vector3.ZERO
+	sliding = false
 
 func _physics_process(delta):
 	var grounded = is_on_floor()

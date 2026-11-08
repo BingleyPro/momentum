@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://de8lbyfuyu8q3"]
+
+[ext_resource type="Script" uid="uid://bjrhejdj8w2nl" path="res://systems/checkpoint.gd" id="1_48e1g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lpkyi"]
+size = Vector3(2, 3, 2)
+
+[node name="Checkpoint" type="Area3D" unique_id=1716444885]
+script = ExtResource("1_48e1g")
+checkpoint_number = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=780954460]
+shape = SubResource("BoxShape3D_lpkyi")
+
+[node name="SpawnLocation" type="Marker3D" parent="." unique_id=2062591375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
