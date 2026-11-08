@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://tsspptg7w1ba" path="res://building/wall_1m.tscn" id="11_w7224"]
 [ext_resource type="PackedScene" uid="uid://duq1n5xrbodnx" path="res://puzzles/interactables/pressure_plate/pressure_plate.tscn" id="12_py2r8"]
 [ext_resource type="PackedScene" uid="uid://jldhvsti4iwv" path="res://puzzles/moveable/box/box.tscn" id="13_wrqhy"]
+[ext_resource type="PackedScene" uid="uid://cm1xd6slfw28i" path="res://puzzles/interactables/button/button.tscn" id="14_wrqhy"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vxcwb"]
 panorama = ExtResource("1_emax3")
@@ -374,3 +375,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -3, -42)
 gate_type = 2
 inputs = [NodePath("../Lever"), NodePath("../PressurePlate2")]
 outputs = [NodePath("../DoorB")]
+
+[node name="Button" parent="." unique_id=1719936494 instance=ExtResource("14_wrqhy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
+
+[node name="Button2" parent="." unique_id=1588146829 instance=ExtResource("14_wrqhy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)
+type = 1

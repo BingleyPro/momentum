@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cm1xd6slfw28i"]
+
+[ext_resource type="Script" uid="uid://ccou6ghujidav" path="res://puzzles/interactables/button/button.gd" id="1_2wnj8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tb07l"]
+size = Vector3(0.3, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qmbns"]
+resource_local_to_scene = true
+albedo_color = Color(0.92941177, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dhdjk"]
+size = Vector3(0.3, 0.2, 0.2)
+
+[sub_resource type="Animation" id="Animation_7pmis"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.92941177, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2, 0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_2wnj8"]
+resource_name = "press"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.92941177, 0, 0, 1), Color(0.05882353, 0.6431373, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 2, 0.1), Vector3(0, 2, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_metsw"]
+_data = {
+&"RESET": SubResource("Animation_7pmis"),
+&"press": SubResource("Animation_2wnj8")
+}
+
+[node name="Button" type="StaticBody3D" unique_id=1719936494]
+script = ExtResource("1_2wnj8")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=584975567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.1)
+mesh = SubResource("BoxMesh_tb07l")
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbns")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1788795806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.1)
+shape = SubResource("BoxShape3D_dhdjk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1234680791]
+libraries/ = SubResource("AnimationLibrary_metsw")
+
+[node name="Timer" type="Timer" parent="." unique_id=1857648260]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

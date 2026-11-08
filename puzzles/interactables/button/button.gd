@@ -2,8 +2,37 @@ extends StaticBody3D
 
 signal state_update(state: bool)
 
+enum ButtonType {Toggle, Timed}
+
 @export var is_usable = true
+@export var type: ButtonType
+@export_range(0.0, 10.0, 0.5, "or_greater", "suffix:s") var time: float = 2.0
+
+var is_on = false
+
+@onready var animation_player = $AnimationPlayer
+@onready var timer = $Timer
 
 func interact() -> void:
 	if is_usable:
-		state_update.emit(true)
+		match type:
+			ButtonType.Toggle:
+				update_state(not is_on)
+			ButtonType.Timed:
+				if not is_on:
+					update_state(true)
+					timer.start(time)
+
+func update_state(new_state) -> void:
+	if new_state != is_on:
+		is_on = new_state
+		
+		if is_on:
+			animation_player.play("press")
+		else:
+			animation_player.play_backwards("press")
+		
+		state_update.emit(is_on)
+
+func _on_timer_timeout():
+	update_state(false)
