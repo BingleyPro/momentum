@@ -40,9 +40,10 @@ var standing_head_y: float
 var checkpoint_number = 0
 var current_checkpoint = null
 
-@onready var head = $Head
-@onready var raycast = $Head/RayCast3D
-@onready var hold_point = $Head/HoldPoint
+@onready var head: Node3D = $Head
+@onready var raycast: RayCast3D = $Head/RayCast3D
+@onready var hold_point: Marker3D = $Head/HoldPoint
+@onready var interact_prompt: Label3D = $InteractPrompt
 
 var checkpoint_location: Transform3D
 
@@ -152,6 +153,36 @@ func respawn() -> void:
 		current_checkpoint.restore_puzzle_state()
 	
 	reset_physics_interpolation()
+	
+func _process(_delta) -> void:
+	interact_prompt.hide()
+	
+	if not raycast.is_colliding():
+		return
+		
+	var target = raycast.get_collider()
+	var prompt = ""
+	
+	if target is RigidBody3D and target.is_in_group("pickupable"):
+		prompt = "[E] Pick up"
+	
+	elif target.has_method("interact"):
+		prompt = "[E] Interact"
+		
+	if prompt.is_empty():
+		return
+	
+	if interact_prompt.text != prompt:
+		interact_prompt.text = prompt
+	
+	var anchor = target.get_node_or_null("PromptAnchor")
+	
+	if anchor:
+		interact_prompt.global_position = target.global_position
+	else:
+		interact_prompt.global_position = target.global_position + Vector3.UP * 0.8
+	
+	interact_prompt.show()
 	
 func _physics_process(delta):
 	var grounded = is_on_floor()

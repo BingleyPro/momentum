@@ -13,3 +13,9 @@ Controls:
 - Hold C to slide
 - R to restart from last checkpoint
 - T to fully restart
+- Hold Shift to sprint
+
+## Notes
+
+- I still have to improve the movement a lot.
+- There is currently only one level.
