@@ -6,6 +6,22 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oul6g"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.09019608, 0.12941177, 0.1764706, 0.9019608)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2627451, 0.3372549, 0.42352942, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Player" type="CharacterBody3D" unique_id=1333248885 groups=["plate_activators", "player"]]
 script = ExtResource("1_oul6g")
 
@@ -27,7 +43,25 @@ target_position = Vector3(0, 0, -3)
 [node name="HoldPoint" type="Marker3D" parent="Head" unique_id=1271853917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="InteractPrompt" type="Label3D" parent="." unique_id=1571506434]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=6781893]
+
+[node name="PromptPanel" type="PanelContainer" parent="CanvasLayer" unique_id=656316113]
 visible = false
-pixel_size = 0.002
-outline_size = 4
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_oul6g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PromptPanel" unique_id=1360956076]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="KeyLabel" type="Label" parent="CanvasLayer/PromptPanel/HBoxContainer" unique_id=298802597]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "E"
+
+[node name="ActionLabel" type="Label" parent="CanvasLayer/PromptPanel/HBoxContainer" unique_id=570425880]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Interact"

@@ -41,9 +41,12 @@ var checkpoint_number = 0
 var current_checkpoint = null
 
 @onready var head: Node3D = $Head
+@onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/RayCast3D
 @onready var hold_point: Marker3D = $Head/HoldPoint
-@onready var interact_prompt: Label3D = $InteractPrompt
+
+@onready var prompt_panel: PanelContainer = $CanvasLayer/PromptPanel
+@onready var action_label: Label = $CanvasLayer/PromptPanel/HBoxContainer/ActionLabel
 
 var checkpoint_location: Transform3D
 
@@ -155,34 +158,37 @@ func respawn() -> void:
 	reset_physics_interpolation()
 	
 func _process(_delta) -> void:
-	interact_prompt.hide()
+	var action = ""
+	var world_position = Vector3.ZERO
 	
-	if not raycast.is_colliding():
-		return
+	if raycast.is_colliding():
+		var target = raycast.get_collider()
 		
-	var target = raycast.get_collider()
-	var prompt = ""
-	
-	if target is RigidBody3D and target.is_in_group("pickupable"):
-		prompt = "[E] Pick up"
-	
-	elif target.has_method("interact"):
-		prompt = "[E] Interact"
-		
-	if prompt.is_empty():
+		if target is RigidBody3D and target.is_in_group("pickupable"):
+			action = "Pick up"
+			
+		elif target.has_method("interact"):
+			action = "Interact"
+			
+		if not action.is_empty():
+			world_position = (raycast.get_collision_point() + raycast.get_collision_normal() * 0.12 + Vector3.UP * 0.25)
+			
+	if action.is_empty():
+		prompt_panel.hide()
 		return
 	
-	if interact_prompt.text != prompt:
-		interact_prompt.text = prompt
+	if action_label.text != action:
+		action_label.text = action
+		prompt_panel.reset_size()
+		
+		prompt_panel.show()
+		
+	var screen_position = camera.unproject_position(world_position)
 	
-	var anchor = target.get_node_or_null("PromptAnchor")
-	
-	if anchor:
-		interact_prompt.global_position = target.global_position
-	else:
-		interact_prompt.global_position = target.global_position + Vector3.UP * 0.8
-	
-	interact_prompt.show()
+	prompt_panel.position = screen_position - Vector2(
+		prompt_panel.size.x / 2,
+		prompt_panel.size.y + 12
+	)
 	
 func _physics_process(delta):
 	var grounded = is_on_floor()
