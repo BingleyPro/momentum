@@ -18,7 +18,6 @@ func _ready() -> void:
 	evaluate()
 				
 func _on_input_changed(_state) -> void:
-	print("Evaluate")
 	evaluate()
 
 func evaluate() -> void:
@@ -39,8 +38,6 @@ func evaluate() -> void:
 		
 	if states.is_empty():
 		return
-		
-	print(states)
 		
 	var result = false
 	

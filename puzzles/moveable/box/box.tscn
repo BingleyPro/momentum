@@ -12,7 +12,7 @@ size = Vector3(0.75, 0.75, 0.75)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3lp8"]
 albedo_color = Color(0.5141709, 0.64065164, 0.21026057, 1)
 
-[node name="Box" type="RigidBody3D" unique_id=914197217 groups=["plate_activators"]]
+[node name="Box" type="RigidBody3D" unique_id=914197217 groups=["pickupable", "plate_activators"]]
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_py2r8")
 lock_rotation = true

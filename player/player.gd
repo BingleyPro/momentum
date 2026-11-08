@@ -207,7 +207,7 @@ func _physics_process(delta):
 	
 	# Held object
 	if is_instance_valid(held_object):
-		var displacement = hold_point.global_basis - held_object.global_position
+		var displacement = hold_point.global_position - held_object.global_position
 		
 		if displacement.length() > 3.5:
 			drop_object()
@@ -217,6 +217,6 @@ func _physics_process(delta):
 		
 		var force = (desired_velocity - held_object.linear_velocity) * held_object.mass * follow_strength
 		
-		force = force.limit_lenngth(held_object.mass * 120.0)
+		force = force.limit_length(held_object.mass * 120.0)
 		
 		held_object.apply_central_force(force)

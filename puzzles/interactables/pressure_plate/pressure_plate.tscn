@@ -6,6 +6,7 @@
 size = Vector3(1, 0.1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_372mo"]
+resource_local_to_scene = true
 albedo_color = Color(0.92941177, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
