@@ -154,6 +154,8 @@ func respawn() -> void:
 	
 	if is_instance_valid(current_checkpoint):
 		current_checkpoint.restore_puzzle_state()
+	else:
+		get_tree().reload_current_scene()
 	
 	reset_physics_interpolation()
 	
@@ -172,7 +174,7 @@ func _process(_delta) -> void:
 			
 		if not action.is_empty():
 			world_position = (raycast.get_collision_point() + raycast.get_collision_normal() * 0.12 + Vector3.UP * 0.25)
-			
+		
 	if action.is_empty():
 		prompt_panel.hide()
 		return

@@ -5,7 +5,7 @@ signal state_update(state: bool)
 @export var is_open: bool = false
 
 @onready var animation_player = $AnimationPlayer
-	
+
 func set_open(value: bool) -> void:
 	if is_open == value:
 		return

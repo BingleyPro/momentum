@@ -46,22 +46,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=6781893]
 
 [node name="PromptPanel" type="PanelContainer" parent="CanvasLayer" unique_id=656316113]
-visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_oul6g")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PromptPanel" unique_id=1360956076]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 44
 
 [node name="KeyLabel" type="Label" parent="CanvasLayer/PromptPanel/HBoxContainer" unique_id=298802597]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 86
 text = "E"
 
 [node name="ActionLabel" type="Label" parent="CanvasLayer/PromptPanel/HBoxContainer" unique_id=570425880]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 86
 text = "Interact"

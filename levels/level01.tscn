@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cm1xd6slfw28i" path="res://puzzles/interactables/button/button.tscn" id="14_wrqhy"]
 [ext_resource type="PackedScene" uid="uid://b46ulixswrtog" path="res://building/ceiling_2m.tscn" id="15_6q0d3"]
 [ext_resource type="PackedScene" uid="uid://de8lbyfuyu8q3" path="res://systems/checkpoint.tscn" id="16_7i3qh"]
+[ext_resource type="PackedScene" uid="uid://djwmvgp6tfju6" path="res://systems/kill_zone.tscn" id="16_myk8p"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vxcwb"]
 panorama = ExtResource("1_emax3")
@@ -756,3 +757,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -25.
 
 [node name="Button" parent="." unique_id=723124119 instance=ExtResource("14_wrqhy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -0.39145076, -1)
+
+[node name="Kill Zone" parent="." unique_id=1522645612 instance=ExtResource("16_myk8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.250805, -38, -32.424427)
+size = Vector3(200, 10, 200)
