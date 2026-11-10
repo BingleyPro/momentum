@@ -22,7 +22,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Player" type="CharacterBody3D" unique_id=1333248885 groups=["plate_activators", "player"]]
+[node name="Player" type="CharacterBody3D" unique_id=1333248885 groups=["jump_pad_activators", "plate_activators", "player"]]
 script = ExtResource("1_oul6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=154357241]

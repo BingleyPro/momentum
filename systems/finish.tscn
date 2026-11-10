@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://qwtyt0oobjyo"]
+
+[ext_resource type="Script" uid="uid://ckgrb0m6ydavp" path="res://systems/finish.gd" id="1_bqvi1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lpkyi"]
+size = Vector3(2, 3, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qmbns"]
+size = Vector3(2, 1, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dhdjk"]
+albedo_color = Color(0, 0.6461605, 0.22961807, 1)
+
+[node name="Finish" type="Area3D" unique_id=1716444885]
+script = ExtResource("1_bqvi1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=780954460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_lpkyi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1468660743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_qmbns")
+surface_material_override/0 = SubResource("StandardMaterial3D_dhdjk")
