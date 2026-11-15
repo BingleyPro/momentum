@@ -120,4 +120,4 @@ func _on_body_entered(body: Node3D) -> void:
 		
 	body.launch(launch)
 
-	animation_player.play("launch")
+	#animation_player.play("launch")
