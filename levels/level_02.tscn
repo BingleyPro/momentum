@@ -86,7 +86,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, -24)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -15)
 
 [node name="Floor23" parent="Environment" unique_id=214269138 instance=ExtResource("3_8yqd8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -7)
 
 [node name="Floor24" parent="Environment" unique_id=1871311196 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67, 0, -5)

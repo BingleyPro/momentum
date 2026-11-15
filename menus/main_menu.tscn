@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://ygilghvo6snn"]
 
+[ext_resource type="Script" uid="uid://c75n3i2qgrfeo" path="res://menus/main_menu.gd" id="1_8gy84"]
+
 [node name="MainMenu" type="Control" unique_id=2052937118]
 layout_mode = 3
 anchors_preset = 15
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8gy84")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1720506412]
 layout_mode = 1
@@ -21,8 +24,22 @@ offset_right = 20.5
 offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 66
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=610743907]
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=825921879]
+layout_mode = 2
+theme_override_font_sizes/font_size = 325
+text = "Momentum"
+
+[node name="Level1" type="Button" parent="VBoxContainer" unique_id=299969522]
 layout_mode = 2
 theme_override_font_sizes/font_size = 112
-text = "Play"
+text = "Level 1"
+
+[node name="Level2" type="Button" parent="VBoxContainer" unique_id=701095881]
+layout_mode = 2
+theme_override_font_sizes/font_size = 112
+text = "Level 2"
+
+[connection signal="pressed" from="VBoxContainer/Level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/Level2" to="." method="_on_level_2_pressed"]
