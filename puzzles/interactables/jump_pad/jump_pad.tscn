@@ -52,11 +52,19 @@ _data = {
 &"launch": SubResource("Animation_nhwah")
 }
 
+[sub_resource type="SphereMesh" id="SphereMesh_tb07l"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qmbns"]
+albedo_color = Color(0, 0.7466292, 0.37013382, 1)
+
 [node name="JumpPad" type="Node3D" unique_id=929839850]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 top_level = true
 script = ExtResource("1_g4xlh")
-launch_direction = Vector3(2.35, 2.2, 2.86)
+launch_velocity = null
+cooldown = null
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=759516211]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.05, 0)
@@ -79,5 +87,9 @@ shape = SubResource("BoxShape3D_nhnwx")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=868458598]
 libraries/ = SubResource("AnimationLibrary_wx2gi")
 
-[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1496631489]
-transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -0.4, 0, 0)
+[node name="TrajectoryPreview" type="MeshInstance3D" parent="." unique_id=53622843]
+
+[node name="LandingMarker" type="MeshInstance3D" parent="." unique_id=739641480]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("SphereMesh_tb07l")
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbns")

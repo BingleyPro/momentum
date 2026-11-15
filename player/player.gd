@@ -40,6 +40,9 @@ var standing_head_y: float
 var checkpoint_number = 0
 var current_checkpoint = null
 
+var will_launch = false
+var pending_launch_velocity = Vector3.ZERO
+
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/RayCast3D
@@ -104,6 +107,10 @@ func _unhandled_input(event) -> void:
 		get_tree().reload_current_scene()
 	elif Input.is_action_just_pressed("respawn"):
 		respawn()
+		
+func launch(launch_velocity: Vector3):
+	pending_launch_velocity = launch_velocity
+	will_launch = true
 
 func pickup_object(object: RigidBody3D) -> void:
 	held_object = object
@@ -193,6 +200,15 @@ func _process(_delta) -> void:
 	)
 	
 func _physics_process(delta):
+	if will_launch:
+		will_launch = false
+		
+		velocity = pending_launch_velocity
+		sliding = false
+		
+		move_and_slide()
+		return
+	
 	var grounded = is_on_floor()
 	
 	if not grounded:
