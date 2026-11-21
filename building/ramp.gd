@@ -5,16 +5,19 @@ extends Node3D
 
 @export_group("Dimensions")
 
+## The length of the ramp.
 @export_range(1.0, 20.0, 1.0, "suffix:m", "or_greater") var ramp_length = 4.0:
 	set(value):
 		ramp_length = value
 		update_ramp()
 
+## The width of the ramp.
 @export_range(1.0, 20.0, 1.0, "suffix:m", "or_greater") var ramp_width = 2.0:
 	set(value):
 		ramp_width = value
 		update_ramp()
 
+## The height of the ramp.
 @export_range(1.0, 10.0, 1.0, "suffix:m", "or_greater") var ramp_height = 1.0:
 	set(value):
 		ramp_height = value

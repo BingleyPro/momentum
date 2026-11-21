@@ -4,8 +4,11 @@ signal state_update(state: bool)
 
 enum GateType {DIRECT, AND, OR, NOT}
 
+## Direct means that when one input is activated, all outputs will be activated. AND means that all output are activated only when all inputs are activated. OR means that at least one inputs need to be activate for all outputs to be activate. NOT means that when one input is activated, all outputs will be deactivated.
 @export var gate_type: GateType = GateType.DIRECT
+## The inputs for the gate.
 @export var inputs: Array[Node] = []
+## The outputs for the gate.
 @export var outputs: Array[Node] = []
 
 var is_on: bool = false

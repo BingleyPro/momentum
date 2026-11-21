@@ -2,7 +2,10 @@ extends StaticBody3D
 
 signal state_update(is_on: bool)
 
+## Whether the lever is toggled by default.
 @export var is_on: bool = false
+
+## Whether the lever can be toggled.
 @export var is_toggleable = true
 
 func interact() -> void:

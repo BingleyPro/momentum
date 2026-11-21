@@ -2,6 +2,7 @@ extends Node3D
 
 signal state_update(state: bool)
 
+## Whether the door is open by default.
 @export var is_open: bool = false
 
 @onready var animation_player = $AnimationPlayer

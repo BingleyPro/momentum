@@ -4,8 +4,11 @@ signal state_update(state: bool)
 
 enum ButtonType {Toggle, Timed}
 
+## Whether the button can be used.
 @export var is_usable = true
+## --
 @export var type: ButtonType
+## --
 @export_range(0.0, 10.0, 0.5, "or_greater", "suffix:s") var time: float = 2.0
 
 var is_on = false

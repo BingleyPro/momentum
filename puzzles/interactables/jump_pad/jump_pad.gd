@@ -1,8 +1,11 @@
 @tool
 extends Node3D
 
+## Whether the jump pad can be used or not.
 @export var enabled = true
+## The amount of velocity applied to the object when it enters.
 @export var launch_velocity: Vector3
+## The cooldown between launches.
 @export var cooldown: float = 0.4
 
 @export var preview_start_offset = Vector3(0, 1, 0)

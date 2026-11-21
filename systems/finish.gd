@@ -1,5 +1,6 @@
 extends Area3D
 
+## The level that players can access when finishing the current level.
 @export_file("*.tscn") var next_level = ""
 
 func _ready() -> void:

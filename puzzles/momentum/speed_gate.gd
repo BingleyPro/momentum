@@ -5,10 +5,21 @@ signal state_update(state: bool)
 
 enum Mode { PULSE, LATCH }
 
-@export var size = Vector3(4, 3, 0.4)
-@export_range(0.0, 40.0, 0.5, "suffix:m/s") var min_speed = 12.0
+## The size of the speed gate in metres.
+@export var size = Vector3(4, 3, 0.4):
+	set(value):
+		size = value
+		rebuild()
+## The minimum speed required to activate the gate.
+@export_range(0.0, 40.0, 0.5, "suffix:m/s") var min_speed = 12.0:
+	set(value):
+		min_speed = value
+		rebuild()
+## The mode of the gate. Latch is where when the gate is triggered, and stays triggered. Pulse is where the gate only stays activate for a certain amount of time.
 @export var mode = Mode.PULSE
+## The amount of time for the gate to stay triggered if the mode is set to pulse.
 @export_range(0.1, 20.0, 0.1, "suffix:s") var hold_time = 3.0
+## Whether boxes should be counted as well as the player to activate the gate.
 @export var count_boxes = true
 
 @onready var collision_shape = $"CollisionShape3D"
@@ -46,6 +57,9 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
 func rebuild() -> void:
+	if not is_node_ready():
+		return
+	
 	collision_shape.shape.size = size
 	mesh.mesh.size = size
 	label.position = Vector3(0, size.y / 2.0 + 0.4, 0)
@@ -72,7 +86,7 @@ func _on_body_entered(body) -> void:
 	if speed >= min_speed:
 		_set_on(true)
 		
-		if mode == mode.PULSE:
+		if mode == Mode.PULSE:
 			timer.start(hold_time)
 	
 	elif not is_on:

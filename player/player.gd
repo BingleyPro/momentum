@@ -49,9 +49,9 @@ extends CharacterBody3D
 ## --
 @export_range(0.0, 0.3, 0.01, "suffix:s") var JUMP_BUFFER = 0.12
 
-## The change in FOV that is applied while sliding
+## The change in FOV that is applied while going above the fov max speed.
 @export_range(0.0, 30.0, 1.0, "suffix:deg") var FOV_BOOST = 12.0
-## --
+## The 
 @export_range(5.0, 40.0, 1.0, "suffix:m/s") var FOV_MAX_SPEED = 18.0
 
 @export_category("Settings")
@@ -338,7 +338,7 @@ func get_slope_pull() -> Vector3:
 	
 func finish_level(next_level: String) -> void:
 	if finished:
-		true
+		return
 	finished = true
 	timer_running = false
 	next_level_path = next_level
@@ -486,18 +486,31 @@ func _physics_process(delta):
 				
 				horizontal_velocity += direction * acceleration_step
 				
+	var speed = horizontal_velocity.length()
+				
 	if sliding:
-		if not grounded or not Input.is_action_pressed("slide") or horizontal_velocity.length() < 2.0:
+		if grounded:
+			slide_air_timer = 0.0
+		else:
+			slide_air_timer += delta
+			
+		var too_slow = speed < 2.0 and not on_slope
+		
+		if slide_air_timer > SLIDE_AIR_GRACE or not Input.is_action_pressed("slide") or too_slow:
 			sliding = false
 	elif grounded and Input.is_action_pressed("slide"):
 		var just_landed = not was_grounded
+		var just_pressed = Input.is_action_just_pressed("slide")
+		var fast_enough = speed > SLIDE_MIN_SPEED
+		var heading_downhill = on_slope and (speed < 1.0 or slope_pull.dot(horizontal_velocity) > 0.0)
 		
-		if (Input.is_action_just_pressed("slide") or just_landed) and horizontal_velocity.length() >= SLIDE_MIN_SPEED:
-			if slide_boost_timer <= 0.0:
+		if heading_downhill or ((just_pressed or just_landed) and fast_enough):
+			if fast_enough and (just_pressed or just_landed) and slide_boost_timer <= 0.0:
 				horizontal_velocity += horizontal_velocity.normalized() * SLIDE_BOOST
 				slide_boost_timer = SLIDE_BOOST_COOLDOWN
-			sliding  = true
-		
+			slide_air_timer = 0.0
+			sliding = true
+
 	was_grounded = grounded
 				
 	# Lower camera if sliding

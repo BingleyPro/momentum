@@ -1,7 +1,10 @@
 @tool
 extends Area3D
 
+# The size in metres of the kill zone.
 @export var size: Vector3
+
+# Whether a preview can be seen in the editor.
 @export var preview = true
 
 var set_size: Vector3

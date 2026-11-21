@@ -1,8 +1,10 @@
 extends Area3D
 
+## The number of the checkpoint.
 @export_range(1, 10, 1, "or_greater") var checkpoint_number: int
 
 @export_group("Reset")
+## The puzzle elements to reset on respawning at this checkpoint.
 @export var reset_nodes: Array[Node] = []
 
 @onready var spawn_point = $SpawnLocation
