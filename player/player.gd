@@ -119,7 +119,7 @@ var complete_label: Label
 @onready var canvas: CanvasLayer = $CanvasLayer
 
 @onready var footstep_sound = $Footstep
-@onready var ambient_background = $AmbientBackground
+@onready var wind_sound = $Wind
 
 var checkpoint_location: Transform3D
 
@@ -396,6 +396,9 @@ func update_movement_audio(delta) -> void:
 		if step_distance >= STEP_LENGTH:
 			step_distance = 0.0
 			footstep_sound.play()
+			
+	var wind = clampf(inverse_lerp(SPRINT_SPEED, FOV_MAX_SPEED, speed), 0.0, 1.0)
+	wind_sound.volume_db = linear_to_db(maxf(wind, 0.001))
 	
 func format_time(seconds: float) -> String:
 	var minutes = int(seconds) / 60

@@ -60,9 +60,12 @@ func rebuild() -> void:
 	if not is_node_ready():
 		return
 	
+	var center = Vector3(size.x / 2.0, size.y / 2.0, -size.z / 2.0)
 	collision_shape.shape.size = size
+	collision_shape.position = center
 	mesh.mesh.size = size
-	label.position = Vector3(0, size.y / 2.0 + 0.4, 0)
+	mesh.position = center
+	label.position = Vector3(size.x / 2.0, size.y / 2.0 + 0.4, 0)
 	label.text = "%d m/s" % int(min_speed)
 	
 func get_speed(body) -> float:

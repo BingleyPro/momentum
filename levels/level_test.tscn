@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cm13yd7dn1uuk" path="res://player/player.tscn" id="2_eu8vo"]
 [ext_resource type="PackedScene" uid="uid://yxn7jqwgodt1" path="res://building/floor_4m.tscn" id="3_5yd65"]
 [ext_resource type="PackedScene" uid="uid://7a43qqvhlqtc" path="res://puzzles/momentum/breakable_wall.tscn" id="4_eu8vo"]
+[ext_resource type="PackedScene" uid="uid://0r4m4ig7yg4f" path="res://puzzles/momentum/speed_gate.tscn" id="5_5yd65"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_y0s4v"]
 panorama = ExtResource("1_4w0vo")
@@ -111,3 +112,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 42)
 [node name="BreakableWall" parent="." unique_id=1571070481 instance=ExtResource("4_eu8vo")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 25)
 break_speed = 9.0
+
+[node name="SpeedGate" parent="." unique_id=1442885233 instance=ExtResource("5_5yd65")]
+transform = Transform3D(-0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.99999994, 1, 0, 23)
