@@ -21,5 +21,8 @@ This is a 3D game built in Godot. My goal is for it to be a game with fun moment
 
 ## Notes
 
-- I still have to improve the movement a lot.
-- There is currently only one level.
+- There is currently only two levels
+
+## Credits
+
+See CREDITS.md for full credits.
