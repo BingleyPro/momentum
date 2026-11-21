@@ -12,6 +12,8 @@ signal state_update(state: bool)
 @onready var mesh = $"MeshInstance3D"
 @onready var label = $"Label3D"
 
+@onready var break_sound = $AudioStreamPlayer3D
+
 var material: StandardMaterial3D
 
 var is_on = false
@@ -45,6 +47,8 @@ func shatter(body, velocity):
 	shape.set_deferred("disabled", true)
 	mesh.hide()
 	label.hide()
+	
+	break_sound.play()
 	
 	var keep = 1.0 - speed_loss
 	if body.is_in_group("player"):

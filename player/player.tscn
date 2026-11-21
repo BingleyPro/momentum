@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cm13yd7dn1uuk"]
 
 [ext_resource type="Script" uid="uid://thqjgnukfe3" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="AudioStream" uid="uid://r3mk4iqvjodp" path="res://assets/sounds/384635__morganpurkis__concrete-footstep-1.wav" id="2_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tb07l"]
 
@@ -64,3 +65,9 @@ text = "E"
 layout_mode = 2
 theme_override_font_sizes/font_size = 86
 text = "Interact"
+
+[node name="AmbientBackground" type="AudioStreamPlayer" parent="." unique_id=1530749899]
+
+[node name="Footstep" type="AudioStreamPlayer" parent="." unique_id=1102023038]
+stream = ExtResource("2_rkbax")
+volume_db = -3.0

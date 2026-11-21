@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7a43qqvhlqtc"]
 
 [ext_resource type="Script" uid="uid://fjhf8o31pwxe" path="res://puzzles/momentum/breakable_wall.gd" id="1_ac2b6"]
+[ext_resource type="AudioStream" uid="uid://djge3174hj2fu" path="res://assets/sounds/276939__gladkiy__breaking_glass_mirror_audio_technica_mb2k.wav" id="2_ushr8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
 size = Vector3(2, 3, 1.4)
@@ -42,3 +43,8 @@ shape = SubResource("BoxShape3D_ac2b6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
 text = "00 m/s"
 font_size = 90
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=36759011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 0)
+stream = ExtResource("2_ushr8")
+volume_db = 7.0

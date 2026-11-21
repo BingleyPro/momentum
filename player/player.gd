@@ -54,6 +54,10 @@ extends CharacterBody3D
 ## The 
 @export_range(5.0, 40.0, 1.0, "suffix:m/s") var FOV_MAX_SPEED = 18.0
 
+@export_category("Audio")
+## Distance between footstep sounds.
+@export_range(0.5, 5.0, 0.1, "suffix:m") var STEP_LENGTH = 2.2
+
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
 ## Whether this player is active.
@@ -98,6 +102,9 @@ var was_grounded = true
 
 var shake = 0.0
 
+var step_distance = 0.0
+var air_fall_speed = 0.0
+
 var base_fov: float
 var hud_label: Label
 var complete_label: Label
@@ -110,6 +117,9 @@ var complete_label: Label
 @onready var prompt_panel: PanelContainer = $CanvasLayer/PromptPanel
 @onready var action_label: Label = $CanvasLayer/PromptPanel/HBoxContainer/ActionLabel
 @onready var canvas: CanvasLayer = $CanvasLayer
+
+@onready var footstep_sound = $Footstep
+@onready var ambient_background = $AmbientBackground
 
 var checkpoint_location: Transform3D
 
@@ -377,6 +387,16 @@ func finish_level(next_level: String) -> void:
 	complete_label.show()
 	prompt_panel.hide()
 	
+func update_movement_audio(delta) -> void:
+	var speed = get_horizontal_speed()
+	var grounded = is_on_floor()
+	
+	if grounded and not sliding and speed > 0.5:
+		step_distance += speed * delta
+		if step_distance >= STEP_LENGTH:
+			step_distance = 0.0
+			footstep_sound.play()
+	
 func format_time(seconds: float) -> String:
 	var minutes = int(seconds) / 60
 	return "%d:%05.2f" % [minutes, fmod(seconds, 60.0)]
@@ -541,6 +561,8 @@ func _physics_process(delta):
 	
 	# Collisions
 	move_and_slide()
+	
+	update_movement_audio(delta)
 	
 	# Held object
 	if is_instance_valid(held_object):
