@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://0r4m4ig7yg4f"]
+
+[ext_resource type="Script" uid="uid://bve3cqc04d2pb" path="res://puzzles/momentum/speed_gate.gd" id="1_dyxti"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qmbns"]
+
+[node name="SpeedGate" type="Area3D" unique_id=1442885233]
+script = ExtResource("1_dyxti")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1732465276]
+shape = SubResource("BoxShape3D_tb07l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=466165468]
+mesh = SubResource("BoxMesh_qmbns")
+
+[node name="Timer" type="Timer" parent="." unique_id=1725823058]
+
+[node name="Label" type="Label" parent="." unique_id=96625454]
+offset_right = 40.0
+offset_bottom = 23.0

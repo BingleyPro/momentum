@@ -61,8 +61,8 @@ func update_preview():
 	
 	var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	
-	# Math! Finds time when player reaches landing height
-	var discriminant = (start_velocity	.y * start_velocity.y + 2 * gravity * start_position.y - landing_world_y)
+	# Finds time when player reaches landing height
+	var discriminant = (start_velocity.y * start_velocity.y + 2 * gravity * (start_position.y - landing_world_y))
 	
 	if discriminant < 0:
 		landing_marker.hide()
