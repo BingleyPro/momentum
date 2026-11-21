@@ -770,3 +770,4 @@ cooldown = 0.4
 
 [node name="Finish" parent="." unique_id=932274089 instance=ExtResource("18_ta2wi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, -23, -44)
+next_level = "uid://fa2ntmihri8r"

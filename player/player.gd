@@ -21,7 +21,7 @@ extends CharacterBody3D
 
 # Speed added on slide
 @export_range(0.0, 10.0, 0.5, "suffix:m/s") var SLIDE_BOOST = 4.0
-@export_range(0.0, 3.0, 0.1, "suffix:m/s") var SLIDE_BOOST_COOLDOWN = 1.0
+@export_range(0.0, 3.0, 0.1, "suffix:s") var SLIDE_BOOST_COOLDOWN = 1.0
 @export_range(0.0, 3.0, 0.1, "suffix:m/s") var SLIDE_SLOPE_GRAVITY = 1.5
 
 @export_group("Feel")
@@ -90,6 +90,8 @@ func _ready() -> void:
 	base_fov = camera.fov
 	floor_snap_length = 0.5
 	build_hud()
+	
+	floor_max_angle = deg_to_rad(60)
 	
 	checkpoint_location = global_transform
 	
@@ -271,7 +273,7 @@ func build_hud() -> void:
 	hud_label.position = Vector2(48, 32)
 	hud_label.add_theme_font_size_override("font_size", 64)
 	hud_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	hud_label.add_theme_color_override("outline_size", 12)
+	hud_label.add_theme_constant_override("outline_size", 12)
 	canvas.add_child(hud_label)
 	
 	complete_label = Label.new()
@@ -280,7 +282,7 @@ func build_hud() -> void:
 	complete_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	complete_label.add_theme_font_size_override("font_size", 110)
 	complete_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	complete_label.add_theme_color_override("outline_size", 20)
+	complete_label.add_theme_constant_override("outline_size", 20)
 	complete_label.hide()
 	canvas.add_child(complete_label)
 	
@@ -304,6 +306,8 @@ func finish_level(next_level: String) -> void:
 		true
 	finished = true
 	timer_running = false
+	next_level_path = next_level
+	
 	velocity = Vector3.ZERO
 	if is_instance_valid(held_object):
 		drop_object()
@@ -314,14 +318,15 @@ func finish_level(next_level: String) -> void:
 	
 	var key = get_tree().current_scene.scene_file_path
 	var best = file.get_value("times", key, INF)
+	var new_best = run_time < best
 	
-	if run_time < best:
+	if new_best:
 		file.set_value("times", key, run_time)
 		file.save(BEST_TIMES_FILE)
 		best = run_time
 		
 	var text = "Level Complete!\n%s" % format_time(run_time)
-	text += "NEW BEST!" if run_time < best else "(best %s)" % format_time(best)
+	text += "   NEW BEST!" if new_best else "   (best %s)" % format_time(best)
 	text += "\n\n[Space] %s    [T] Retry    [Esc] Menu" % ("Next level" if not next_level.is_empty() else "Menu")
 	complete_label.text = text
 	complete_label.show()
@@ -450,7 +455,7 @@ func _physics_process(delta):
 	if sliding:
 		if not grounded or not Input.is_action_pressed("slide") or horizontal_velocity.length() < 2.0:
 			sliding = false
-	elif grounded and Input.is_action_just_pressed("slide"):
+	elif grounded and Input.is_action_pressed("slide"):
 		var just_landed = not was_grounded
 		
 		if (Input.is_action_just_pressed("slide") or just_landed) and horizontal_velocity.length() >= SLIDE_MIN_SPEED:

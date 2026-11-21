@@ -1,3 +1,4 @@
+@tool
 extends Area3D
 
 signal state_update(state: bool)
@@ -20,16 +21,21 @@ var material: StandardMaterial3D
 var is_on = false
 
 # Colours
-const COLOUR_DEFAULT = Color(0.712, 0.621, 0.246, 1.0)
-const COLOUR_ON = Color(0.0, 0.825, 0.21, 1.0)
-const COLOUR_FAIL = Color(0.863, 0.0, 0.0, 1.0)
+const COLOUR_DEFAULT = Color(0.712, 0.621, 0.246, 0.4)
+const COLOUR_ON = Color(0.0, 0.825, 0.21, 0.4)
+const COLOUR_FAIL = Color(0.863, 0.0, 0.0, 0.4)
 
 func _ready() -> void:
+	collision_shape.shape = collision_shape.shape.duplicate()
+	mesh.mesh = mesh.mesh.duplicate()
+	
 	material = StandardMaterial3D.new()
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	material.albedo_color = COLOUR_DEFAULT
+	
+	mesh.material_override = material
 	
 	rebuild()
 	
@@ -65,6 +71,9 @@ func _on_body_entered(body) -> void:
 		
 	if speed >= min_speed:
 		_set_on(true)
+		
+		if mode == mode.PULSE:
+			timer.start(hold_time)
 	
 	elif not is_on:
 		# show failure
@@ -84,4 +93,14 @@ func _set_on(value) -> void:
 	is_on = value
 	state_update.emit(is_on)
 	
+func get_checkpoint_state():
+	return {
+		"is_on": is_on,
+		"time_left": timer.time_left
+	}
 	
+func restore_checkpoint_state(state) -> void:
+	timer.stop()
+	_set_on(state["is_on"])
+	if state["is_on"] and state["time_left"] > 0.0:
+		timer.start(state["time_left"])

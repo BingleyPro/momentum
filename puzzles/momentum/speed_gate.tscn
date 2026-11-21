@@ -16,7 +16,8 @@ shape = SubResource("BoxShape3D_tb07l")
 mesh = SubResource("BoxMesh_qmbns")
 
 [node name="Timer" type="Timer" parent="." unique_id=1725823058]
+one_shot = true
 
-[node name="Label" type="Label" parent="." unique_id=96625454]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Label" type="Label3D" parent="." unique_id=683878333]
+billboard = 1
+font_size = 96
