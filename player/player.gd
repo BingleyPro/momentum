@@ -26,6 +26,8 @@ extends CharacterBody3D
 @export_range(0.0, 20.0, 1.0, "suffix:m/s") var SLIDE_FRICTION = 3.0
 ## --
 @export_range(0.0, 10.0, 1.0, "suffix:m/s") var SLIDE_STEER = 2.0
+## The maximum horizontal speed that slopes can push the player to while sliding.
+@export_range(5.0, 50.0, 1.0 ,"suffix:m/s") var SLIDE_MAX_SPEED = 25.0
 ## How far down the camera drops while sliding
 @export_range(0.0, 3.0, 0.05, "suffix:m") var SLIDE_CAMERA_DROP = 0.7
 ## What speed the camera moves down at when sliding
@@ -483,7 +485,8 @@ func _physics_process(delta):
 			if slope_pull.dot(horizontal_velocity) <= 0.0:
 				horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO, SLIDE_FRICTION * delta)
 			
-			horizontal_velocity += slope_pull * SLIDE_SLOPE_GRAVITY * delta
+			if horizontal_velocity.length() < SLIDE_MAX_SPEED:
+				horizontal_velocity += slope_pull * SLIDE_SLOPE_GRAVITY * delta
 			
 			# Limited sideways steering
 			if direction != Vector3.ZERO and horizontal_velocity.length() > 0.01:
@@ -571,6 +574,8 @@ func _physics_process(delta):
 	# Update velocity
 	velocity.x = horizontal_velocity.x
 	velocity.z = horizontal_velocity.z
+	
+	floor_snap_length = 1.2 if sliding else 0.5
 	
 	# Collisions
 	move_and_slide()
