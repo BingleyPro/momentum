@@ -16,7 +16,7 @@ enum Mode { PULSE, LATCH }
 		min_speed = value
 		rebuild()
 ## The mode of the gate. Latch is where when the gate is triggered, and stays triggered. Pulse is where the gate only stays activate for a certain amount of time.
-@export var mode = Mode.PULSE
+@export var mode: Mode = Mode.PULSE
 ## The amount of time for the gate to stay triggered if the mode is set to pulse.
 @export_range(0.1, 20.0, 0.1, "suffix:s") var hold_time = 3.0
 ## Whether boxes should be counted as well as the player to activate the gate.

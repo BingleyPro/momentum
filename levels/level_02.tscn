@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://djwmvgp6tfju6" path="res://systems/kill_zone.tscn" id="13_pdr83"]
 [ext_resource type="PackedScene" uid="uid://cm1xd6slfw28i" path="res://puzzles/interactables/button/button.tscn" id="14_ddsyl"]
 [ext_resource type="PackedScene" uid="uid://qwtyt0oobjyo" path="res://systems/finish.tscn" id="15_ddsyl"]
+[ext_resource type="PackedScene" uid="uid://7a43qqvhlqtc" path="res://puzzles/momentum/breakable_wall.tscn" id="16_5l6ou"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gia0r"]
 panorama = ExtResource("1_8yqd8")
@@ -900,3 +901,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 45, 84)
 
 [node name="Finish" parent="." unique_id=426082015 instance=ExtResource("15_ddsyl")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 44, 89)
+
+[node name="BreakableWall" parent="." unique_id=1571070481 instance=ExtResource("16_5l6ou")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 25, 0, -7)

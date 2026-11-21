@@ -2,22 +2,34 @@
 
 [ext_resource type="Script" uid="uid://bve3cqc04d2pb" path="res://puzzles/momentum/speed_gate.gd" id="1_dyxti"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_dyxti"]
+size = Vector3(4, 3, 0.4)
 
-[sub_resource type="BoxMesh" id="BoxMesh_qmbns"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn1xl"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.712, 0.621, 0.246, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ny4yr"]
+size = Vector3(4, 3, 0.4)
 
 [node name="SpeedGate" type="Area3D" unique_id=1442885233]
 script = ExtResource("1_dyxti")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1732465276]
-shape = SubResource("BoxShape3D_tb07l")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -0.2)
+shape = SubResource("BoxShape3D_dyxti")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=466165468]
-mesh = SubResource("BoxMesh_qmbns")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -0.2)
+material_override = SubResource("StandardMaterial3D_xn1xl")
+mesh = SubResource("BoxMesh_ny4yr")
 
 [node name="Timer" type="Timer" parent="." unique_id=1725823058]
 one_shot = true
 
 [node name="Label" type="Label3D" parent="." unique_id=683878333]
-billboard = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.9, 0)
+text = "12 m/s"
 font_size = 96

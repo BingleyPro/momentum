@@ -10,14 +10,21 @@ signal state_update(state: bool)
 @onready var detector = $"Detector"
 @onready var shape = $"CollisionShape3D"
 @onready var mesh = $"MeshInstance3D"
+@onready var label = $"Label3D"
+
+var material: StandardMaterial3D
 
 var is_on = false
 
-func _physics_process(delta):
+func _ready():
+	label.text = "%d m/s" % int(break_speed)
+	material = mesh.get_surface_override_material(0)
+
+func _physics_process(_delta):
 	if is_on:
 		return
 	
-	for body: PhysicsBody3D in detector.get_overlapping_bodies():
+	for body in detector.get_overlapping_bodies():
 		var velocity = Vector3.ZERO
 		
 		if body.is_in_group("player"):
@@ -30,23 +37,59 @@ func _physics_process(delta):
 		var horizontal_speed = Vector2(velocity.x, velocity.z).length()
 		
 		if horizontal_speed >= break_speed:
-			shatter(body)
+			shatter(body, velocity)
 			return
 			
-func shatter(body):
+func shatter(body, velocity):
 	is_on = true
 	shape.set_deferred("disabled", true)
 	mesh.hide()
+	label.hide()
 	
 	var keep = 1.0 - speed_loss
 	if body.is_in_group("player"):
 		body.velocity.x *= keep
 		body.velocity.z *= keep
+		body.add_shake(0.6)
 	elif body.is_in_group("pickupable"):
 		body.linear_velocity *= keep
 		
+	spawn_shards(body, velocity)
+		
 	state_update.emit(true)
 	
+func spawn_shards(body, velocity):
+	var shard_mesh = BoxMesh.new()
+	shard_mesh.size = Vector3(0.25, 0.25, 0.04)
+	var shard_shape = BoxShape3D.new()
+	shard_shape.size = shard_mesh.size
+	var size = mesh.mesh.size
+	
+	for i in 30:
+		var shard = RigidBody3D.new()
+		shard.mass = 0.1
+		shard.collision_layer = 0
+		
+		var m = MeshInstance3D.new()
+		m.mesh = shard_mesh
+		m.material_override = material
+		shard.add_child(m)
+		
+		var c = CollisionShape3D.new()
+		c.shape = shard_shape
+		shard.add_child(c)
+		
+		get_tree().current_scene.add_child(shard)
+		
+		var offset = Vector3(randf_range(-0.5, 0.5) * size.x, randf_range(-0.5, 0.5) * size.y, 0)
+		shard.global_position = mesh.global_transform * offset
+		shard.rotation = Vector3(randf(), randf(), randf()) * TAU
+		shard.linear_velocity = velocity * randf_range(0.3, 0.8) + Vector3(randf_range(-2.0, 2.0), randf_range(0.0, 3.0), randf_range(-2.0, 2.0))
+		
+		var tween = shard.create_tween()
+		tween.tween_interval(4.0)
+		tween.tween_callback(shard.queue_free)
+
 func get_checkpoint_state():
 	return is_on
 	
@@ -54,4 +97,5 @@ func restore_checkpoint_state(state):
 	is_on = state
 	shape.set_deferred("disabled", is_on)
 	mesh.visible = not is_on
+	label.visible = not is_on
 	state_update.emit(is_on)

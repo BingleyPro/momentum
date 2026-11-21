@@ -96,6 +96,8 @@ var coyote_timer = 0.0
 var jump_buffer_timer = 0.0
 var was_grounded = true
 
+var shake = 0.0
+
 var base_fov: float
 var hud_label: Label
 var complete_label: Label
@@ -203,6 +205,9 @@ func get_horizontal_speed() -> float:
 func launch(launch_velocity: Vector3):
 	pending_launch_velocity = launch_velocity
 	will_launch = true
+	
+func add_shake(amount) -> void:
+	shake = minf(shake + amount, 1.0)
 
 func pickup_object(object: RigidBody3D) -> void:
 	held_object = object
@@ -324,6 +329,11 @@ func update_hud(delta) -> void:
 	# Increase FOV
 	var t = clampf(inverse_lerp(SPRINT_SPEED, FOV_MAX_SPEED, speed), 0.0, 1.0)
 	camera.fov = lerpf(camera.fov, base_fov + FOV_BOOST * t, 1.0 - exp(-8.0 * delta))
+	
+	# Shake
+	shake = maxf(shake - delta * 2.0, 0.0)
+	camera.h_offset = randf_range(-1, 1) * shake * shake * 0.15
+	camera.v_offset = randf_range(-1, 1) * shake * shake * 0.15
 	
 func boost(direction: Vector3, amount: float, max_speed: float) -> void:
 	# boost logic
