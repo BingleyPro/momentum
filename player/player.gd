@@ -55,8 +55,12 @@ extends CharacterBody3D
 @export_range(5.0, 40.0, 1.0, "suffix:m/s") var FOV_MAX_SPEED = 18.0
 
 @export_category("Audio")
-## Distance between footstep sounds.
+## The distance between footstep sounds.
 @export_range(0.5, 5.0, 0.1, "suffix:m") var STEP_LENGTH = 2.2
+## The volume of wind at full speed.
+@export_range(-40.0, 6.0, 0.5, "suffix:dB") var WIND_MAX_VOLUME = -8.0
+## The speed at which wind starts to be heard.
+@export_range(0.0, 20.0, 0.5, "suffix:m/s") var WIND_START_SPEED = 7.0
 
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
@@ -134,6 +138,9 @@ func _ready() -> void:
 	floor_max_angle = deg_to_rad(60)
 	
 	checkpoint_location = global_transform
+	
+	wind_sound.volume_db = -80.0
+	wind_sound.play()
 	
 	if not is_active:
 		queue_free()
@@ -345,6 +352,12 @@ func update_hud(delta) -> void:
 	camera.h_offset = randf_range(-1, 1) * shake * shake * 0.15
 	camera.v_offset = randf_range(-1, 1) * shake * shake * 0.15
 	
+	# Wind sound (fades out during finish)
+	var wind = clampf(inverse_lerp(WIND_START_SPEED, FOV_MAX_SPEED, speed), 0.0, 1.0)
+	var target_db = linear_to_db(maxf(wind, 0.001)) + WIND_MAX_VOLUME
+	wind_sound.volume_db = lerpf(wind_sound.volume_db, target_db, 1.0 - exp(-6.0 * delta))
+	wind_sound.pitch_scale = lerpf(0.85, 1.25, wind)
+	
 func boost(direction: Vector3, amount: float, max_speed: float) -> void:
 	# boost logic
 	pass
@@ -396,9 +409,6 @@ func update_movement_audio(delta) -> void:
 		if step_distance >= STEP_LENGTH:
 			step_distance = 0.0
 			footstep_sound.play()
-			
-	var wind = clampf(inverse_lerp(SPRINT_SPEED, FOV_MAX_SPEED, speed), 0.0, 1.0)
-	wind_sound.volume_db = linear_to_db(maxf(wind, 0.001))
 	
 func format_time(seconds: float) -> String:
 	var minutes = int(seconds) / 60

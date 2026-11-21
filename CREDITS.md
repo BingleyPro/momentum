@@ -6,3 +6,4 @@ Sounds (freesound.org):
 - breaking_glass_mirror_Audio_Technica_MB2K.wav by gladkiy -- https://freesound.org/s/276939/ -- License: Creative Commons 0
 - Footstep_Wood_Toe_1.wav by GiocoSound -- https://freesound.org/s/421153/ -- License: Creative Commons 0
 - Footstep_Metal_2.wav by GiocoSound -- https://freesound.org/s/421133/ -- License: Creative Commons 0
+- wind trees 130914_02.wav by klankbeeld -- https://freesound.org/s/207373/ -- License: Attribution 4.0

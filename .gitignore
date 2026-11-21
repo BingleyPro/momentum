@@ -20,3 +20,5 @@ addons/godot_super-wakatime/
 
 # Materials
 assets/materials
+
+.DS_Store
