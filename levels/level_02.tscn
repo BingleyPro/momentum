@@ -64,8 +64,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0)
 [node name="Floor15" parent="Environment" unique_id=402024902 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 0)
 
+[node name="Floor26" parent="Environment" unique_id=884463797 instance=ExtResource("3_8yqd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
+
 [node name="Floor16" parent="Environment" unique_id=2026306998 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -9)
+
+[node name="Floor28" parent="Environment" unique_id=1630087319 instance=ExtResource("3_8yqd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -9)
 
 [node name="Floor17" parent="Environment" unique_id=447880546 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -19)
@@ -84,6 +90,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, -24)
 
 [node name="Floor22" parent="Environment" unique_id=1320287251 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -15)
+
+[node name="Floor27" parent="Environment" unique_id=430722916 instance=ExtResource("3_8yqd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -15)
 
 [node name="Floor23" parent="Environment" unique_id=214269138 instance=ExtResource("3_8yqd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -7)

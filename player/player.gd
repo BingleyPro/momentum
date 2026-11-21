@@ -19,6 +19,17 @@ extends CharacterBody3D
 @export_range(0.0, 3.0, 0.05, "suffix:m") var SLIDE_CAMERA_DROP = 0.7
 @export_range(0.0, 10.0, 1.0, "suffix:m/s") var CAMERA_TRANSITION_SPEED = 5.0
 
+# Speed added on slide
+@export_range(0.0, 10.0, 0.5, "suffix:m/s") var SLIDE_BOOST = 4.0
+@export_range(0.0, 3.0, 0.1, "suffix:m/s") var SLIDE_BOOST_COOLDOWN = 1.0
+@export_range(0.0, 3.0, 0.1, "suffix:m/s") var SLIDE_SLOPE_GRAVITY = 1.5
+
+@export_group("Feel")
+@export_range(0.0, 0.3, 0.01, "suffix:s") var COYOTE_TIME = 0.12
+@export_range(0.0, 0.3, 0.01, "suffix:s") var JUMP_BUFFER = 0.12
+@export_range(0.0, 30.0, 1.0, "suffix:deg") var FOV_BOOST = 12.0 # feel the speed!
+@export_range(5.0, 40.0, 1.0, "suffix:m/s") var FOV_MAX_SPEED = 18.0
+
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
 @export var is_active = true
@@ -26,9 +37,13 @@ extends CharacterBody3D
 @export_group("Pickup")
 @export var follow_speed = 8.0
 @export var follow_strength = 10.0
+@export_range(0.0, 30.0, 0.5, "suffix:m/s") var THROW_SPEED = 8.0
 
 @export_category("Debug")
 @export var start_at_checkpoint: Node
+
+const MENU_SCENE = "res://menus/main_menu.tscn"
+const BEST_TIMES_FILE = "user://best_times.cfg"
 
 var held_object: RigidBody3D = null
 var original_gravity = 1.0
@@ -43,6 +58,20 @@ var current_checkpoint = null
 var will_launch = false
 var pending_launch_velocity = Vector3.ZERO
 
+var run_time = 0.0
+var timer_running = false
+var finished = false
+var next_level_path = ""
+
+var slide_boost_timer = 0.0
+var coyote_timer = 0.0
+var jump_buffer_timer = 0.0
+var was_grounded = true
+
+var base_fov: float
+var hud_label: Label
+var complete_label: Label
+
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/RayCast3D
@@ -50,12 +79,17 @@ var pending_launch_velocity = Vector3.ZERO
 
 @onready var prompt_panel: PanelContainer = $CanvasLayer/PromptPanel
 @onready var action_label: Label = $CanvasLayer/PromptPanel/HBoxContainer/ActionLabel
+@onready var canvas: CanvasLayer = $CanvasLayer
 
 var checkpoint_location: Transform3D
 
 func _ready() -> void:
 	standing_head_y = head.position.y
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	base_fov = camera.fov
+	floor_snap_length = 0.5
+	build_hud()
 	
 	checkpoint_location = global_transform
 	
@@ -69,6 +103,10 @@ func _ready() -> void:
 		respawn()
 	
 func _unhandled_input(event) -> void:
+	if finished:
+		handle_finished_input(event)
+		return
+	
 	if event is InputEventMouseMotion:
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			# Rotate the player's head for mouse movement
@@ -79,6 +117,10 @@ func _unhandled_input(event) -> void:
 				deg_to_rad(-85),
 				deg_to_rad(85)
 			)
+			
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_instance_valid(held_object):
+			throw_object()
 			
 	elif event.is_action_pressed("interact"):
 		# If holding object, drop it
@@ -107,6 +149,26 @@ func _unhandled_input(event) -> void:
 		get_tree().reload_current_scene()
 	elif Input.is_action_just_pressed("respawn"):
 		respawn()
+		
+func handle_finished_input(event) -> void:
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("jump"):
+		if next_level_path.is_empty():
+			get_tree().change_scene_to_file(MENU_SCENE)
+		else:
+			get_tree().change_scene_to_file(next_level_path)
+	elif event.is_action_pressed("restart"):
+		get_tree().reload_current_scene()
+	elif event.is_action_pressed("escape"):
+		get_tree().change_scene_to_file(MENU_SCENE)
+		
+func throw_object() -> void:
+	var object = held_object
+	drop_object()
+	
+	object.linear_velocity = velocity + THROW_SPEED * -camera.global_basis.z
+	
+func get_horizontal_speed() -> float:
+	return Vector2(velocity.x, velocity.z).length()
 		
 func launch(launch_velocity: Vector3):
 	pending_launch_velocity = launch_velocity
@@ -166,7 +228,11 @@ func respawn() -> void:
 	
 	reset_physics_interpolation()
 	
-func _process(_delta) -> void:
+func _process(delta) -> void:
+	update_hud(delta)
+	if finished:
+		return
+	
 	var action = ""
 	var world_position = Vector3.ZERO
 	
@@ -190,7 +256,7 @@ func _process(_delta) -> void:
 		action_label.text = action
 		prompt_panel.reset_size()
 		
-		prompt_panel.show()
+	prompt_panel.show()
 		
 	var screen_position = camera.unproject_position(world_position)
 	
@@ -199,7 +265,76 @@ func _process(_delta) -> void:
 		prompt_panel.size.y + 12
 	)
 	
+func build_hud() -> void:
+	# Programatically build hud
+	hud_label = Label.new()
+	hud_label.position = Vector2(48, 32)
+	hud_label.add_theme_font_size_override("font_size", 64)
+	hud_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	hud_label.add_theme_color_override("outline_size", 12)
+	canvas.add_child(hud_label)
+	
+	complete_label = Label.new()
+	complete_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	complete_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	complete_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	complete_label.add_theme_font_size_override("font_size", 110)
+	complete_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	complete_label.add_theme_color_override("outline_size", 20)
+	complete_label.hide()
+	canvas.add_child(complete_label)
+	
+func update_hud(delta) -> void:
+	if timer_running:
+		run_time += delta
+		
+	var speed = get_horizontal_speed()
+	hud_label.text = "%4.1f m/s\n%s" % [speed, format_time(run_time)]
+	
+	# Increase FOV
+	var t = clampf(inverse_lerp(SPRINT_SPEED, FOV_MAX_SPEED, speed), 0.0, 1.0)
+	camera.fov = lerpf(camera.fov, base_fov + FOV_BOOST * t, 1.0 - exp(-8.0 * delta))
+	
+func boost(direction: Vector3, amount: float, max_speed: float) -> void:
+	# boost logic
+	pass
+	
+func finish_level(next_level: String) -> void:
+	if finished:
+		true
+	finished = true
+	timer_running = false
+	velocity = Vector3.ZERO
+	if is_instance_valid(held_object):
+		drop_object()
+		
+	# Save time
+	var file = ConfigFile.new()
+	file.load(BEST_TIMES_FILE)
+	
+	var key = get_tree().current_scene.scene_file_path
+	var best = file.get_value("times", key, INF)
+	
+	if run_time < best:
+		file.set_value("times", key, run_time)
+		file.save(BEST_TIMES_FILE)
+		best = run_time
+		
+	var text = "Level Complete!\n%s" % format_time(run_time)
+	text += "NEW BEST!" if run_time < best else "(best %s)" % format_time(best)
+	text += "\n\n[Space] %s    [T] Retry    [Esc] Menu" % ("Next level" if not next_level.is_empty() else "Menu")
+	complete_label.text = text
+	complete_label.show()
+	prompt_panel.hide()
+	
+func format_time(seconds: float) -> String:
+	var minutes = int(seconds) / 60
+	return "%d:%05.2f" % [minutes, fmod(seconds, 60.0)]
+
 func _physics_process(delta):
+	if finished:
+		return
+	
 	if will_launch:
 		will_launch = false
 		
@@ -210,17 +345,36 @@ func _physics_process(delta):
 		return
 	
 	var grounded = is_on_floor()
-	
+		
+	slide_boost_timer = maxf(0.0, slide_boost_timer - delta)
+		
+	# Coyote time/jump buffer
+	if grounded:
+		coyote_timer = COYOTE_TIME
+	else:
+		coyote_timer = maxf(0.0, coyote_timer - delta)
+		
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = JUMP_BUFFER
+	else:
+		jump_buffer_timer = maxf(0.0, jump_buffer_timer - delta)
+		
 	if not grounded:
 		velocity += get_gravity() * delta
 		
-	if grounded and Input.is_action_just_pressed("jump"):
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 		velocity.y = JUMP_VELOCITY
 		sliding = false
 		grounded = false
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
 
 	var input_dir = Input.get_vector("left", "right", "forwards", "backwards")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	# Start timer if not already running
+	if not timer_running and (input_dir != Vector2.ZERO or Input.is_action_pressed("jump")):
+		timer_running = true
 	
 	# Player should move faster forwards
 	var backward_amount = maxf(0.0, input_dir.y)
@@ -243,8 +397,14 @@ func _physics_process(delta):
 			horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO,
 			SLIDE_FRICTION * delta)
 			
+			# Remove component of gravity that pushes player into floor
+			var floor_normal = get_floor_normal()
+			var g = get_gravity()
+			var along_slope = g - floor_normal * g.dot(floor_normal)
+			horizontal_velocity += Vector3(along_slope.x, 0, along_slope.z) * SLIDE_SLOPE_GRAVITY * delta
+			
 			# Limited sideways steering
-			if direction != Vector3.ZERO:
+			if direction != Vector3.ZERO and horizontal_velocity.length() > 0.01:
 				var motion_direction = horizontal_velocity.normalized()
 				
 				var steering_direction = direction - motion_direction * direction.dot(motion_direction)
@@ -254,10 +414,18 @@ func _physics_process(delta):
 		elif direction != Vector3.ZERO:
 			var desired_velocity = direction * target_speed
 			
-			horizontal_velocity = horizontal_velocity.move_toward(
+			if horizontal_velocity.length() > target_speed and horizontal_velocity.dot(direction) > 0:
+				horizontal_velocity = horizontal_velocity.move_toward(
+				desired_velocity,
+				GROUND_FRICTION * delta
+			)
+			else:
+				horizontal_velocity = horizontal_velocity.move_toward(
 				desired_velocity,
 				GROUND_ACCELERATION * delta
 			)
+			
+			
 		else:
 			horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO,
 			GROUND_FRICTION * delta)
@@ -283,11 +451,15 @@ func _physics_process(delta):
 		if not grounded or not Input.is_action_pressed("slide") or horizontal_velocity.length() < 2.0:
 			sliding = false
 	elif grounded and Input.is_action_just_pressed("slide"):
-		if horizontal_velocity.length() >= SLIDE_MIN_SPEED:
-			# Add initial speed boost
-			horizontal_velocity += direction * (horizontal_velocity.length() - 4.0)
-			
-			sliding = true
+		var just_landed = not was_grounded
+		
+		if (Input.is_action_just_pressed("slide") or just_landed) and horizontal_velocity.length() >= SLIDE_MIN_SPEED:
+			if slide_boost_timer <= 0.0:
+				horizontal_velocity += horizontal_velocity.normalized() * SLIDE_BOOST
+				slide_boost_timer = SLIDE_BOOST_COOLDOWN
+			sliding  = true
+		
+	was_grounded = grounded
 				
 	# Lower camera if sliding
 	var target_head_y = standing_head_y
