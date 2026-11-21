@@ -55,3 +55,5 @@ func restore_checkpoint_state(state):
 	
 	if time_left != 0:
 		timer.start(time_left)
+		
+	state_update.emit(is_on)

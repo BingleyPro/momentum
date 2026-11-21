@@ -2,44 +2,71 @@ extends CharacterBody3D
 
 @export_category("Movement")
 @export_group("Velocity")
+## The velocity applied when the player jumps.
 @export_range(0.0, 10.0, 0.5, "suffix:m/s") var JUMP_VELOCITY = 4.5
+## The maximum speed at which the player can walk.
 @export_range(0.0, 20.0, 0.5, "suffix:m/s") var WALK_SPEED = 5.0
+## The maximum speed at which the player can sprint.
 @export_range(0.0, 25.0, 0.5, "suffix:m/s") var SPRINT_SPEED = 9.0
 
 @export_group("Acceleration")
+## The acceleration (m/s) applied to the player while on the ground.
 @export_range(0.0, 100.0, 1.0, "suffix:m/s/s") var GROUND_ACCELERATION = 50.0
+## The friction (m/s) applied to the player while on the ground.
 @export_range(0.0, 75.0, 1.0, "suffix:m/s/s") var GROUND_FRICTION = 25.0
+## The acceleration (m/s) applied to the player while in the air
 @export_range(0.0, 10.0, 0.1, "suffix:m/s/s") var AIR_ACCELERATION = 3.0
+## The friction (m/s) applied to the player while in the air.
 @export_range(0.0, 1.0, 0.05, "suffix:m/s/s") var AIR_FRICTION = 0.2
 
 @export_group("Sliding")
+## The minimum speed that the player must be at to start sliding.
 @export_range(0.0, 20.0, 0.5, "suffix:m/s") var SLIDE_MIN_SPEED = 6.0
+## The friction (m/s) applied to the player while sliding.
 @export_range(0.0, 20.0, 1.0, "suffix:m/s") var SLIDE_FRICTION = 3.0
+## --
 @export_range(0.0, 10.0, 1.0, "suffix:m/s") var SLIDE_STEER = 2.0
+## How far down the camera drops while sliding
 @export_range(0.0, 3.0, 0.05, "suffix:m") var SLIDE_CAMERA_DROP = 0.7
+## What speed the camera moves down at when sliding
 @export_range(0.0, 10.0, 1.0, "suffix:m/s") var CAMERA_TRANSITION_SPEED = 5.0
 
-# Speed added on slide
+## The speed boost applied when the player starts sliding.
 @export_range(0.0, 10.0, 0.5, "suffix:m/s") var SLIDE_BOOST = 4.0
+## The cooldown between slide boosts.
 @export_range(0.0, 3.0, 0.1, "suffix:s") var SLIDE_BOOST_COOLDOWN = 1.0
+## --
 @export_range(0.0, 3.0, 0.1, "suffix:m/s") var SLIDE_SLOPE_GRAVITY = 1.5
 
+## The angle at which a floor counts as a slope, and requires no sprint to slide down it.
+@export_range(0.0, 45.0, 1.0, "suffix:deg") var SLIDE_SLOPE_MIN_ANGLE = 8.0
+# How long the player can leave the ground during a slide without the slide ending.
+@export_range(0.0, 0.5, 0.01) var SLIDE_AIR_GRACE = 0.15
+
 @export_group("Feel")
+## How long the player has after leaving a platform to still be able to jump.
 @export_range(0.0, 0.3, 0.01, "suffix:s") var COYOTE_TIME = 0.12
+## --
 @export_range(0.0, 0.3, 0.01, "suffix:s") var JUMP_BUFFER = 0.12
-@export_range(0.0, 30.0, 1.0, "suffix:deg") var FOV_BOOST = 12.0 # feel the speed!
+
+## The change in FOV that is applied while sliding
+@export_range(0.0, 30.0, 1.0, "suffix:deg") var FOV_BOOST = 12.0
+## --
 @export_range(5.0, 40.0, 1.0, "suffix:m/s") var FOV_MAX_SPEED = 18.0
 
 @export_category("Settings")
 @export var mouse_sensitivity: float = 0.002
+## Whether this player is active.
 @export var is_active = true
 
 @export_group("Pickup")
 @export var follow_speed = 8.0
 @export var follow_strength = 10.0
+## The speed at which the player can throw an object.
 @export_range(0.0, 30.0, 0.5, "suffix:m/s") var THROW_SPEED = 8.0
 
 @export_category("Debug")
+## If selected, the player will start at the given checkpoint.
 @export var start_at_checkpoint: Node
 
 const MENU_SCENE = "res://menus/main_menu.tscn"
@@ -64,6 +91,7 @@ var finished = false
 var next_level_path = ""
 
 var slide_boost_timer = 0.0
+var slide_air_timer = 0.0
 var coyote_timer = 0.0
 var jump_buffer_timer = 0.0
 var was_grounded = true
@@ -301,6 +329,13 @@ func boost(direction: Vector3, amount: float, max_speed: float) -> void:
 	# boost logic
 	pass
 	
+func get_slope_pull() -> Vector3:
+	var normal = get_floor_normal()
+	var g = get_gravity()
+	var along = g - normal * g.dot(normal)
+	
+	return Vector3(along.x, 0, along.z)
+	
 func finish_level(next_level: String) -> void:
 	if finished:
 		true
@@ -350,6 +385,9 @@ func _physics_process(delta):
 		return
 	
 	var grounded = is_on_floor()
+	
+	var on_slope = grounded and get_floor_angle() > deg_to_rad(SLIDE_SLOPE_MIN_ANGLE)
+	var slope_pull = get_slope_pull() if on_slope else Vector3.ZERO
 		
 	slide_boost_timer = maxf(0.0, slide_boost_timer - delta)
 		
@@ -399,14 +437,10 @@ func _physics_process(delta):
 	if grounded:
 		# Sliding
 		if sliding:
-			horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO,
-			SLIDE_FRICTION * delta)
+			if slope_pull.dot(horizontal_velocity) <= 0.0:
+				horizontal_velocity = horizontal_velocity.move_toward(Vector3.ZERO, SLIDE_FRICTION * delta)
 			
-			# Remove component of gravity that pushes player into floor
-			var floor_normal = get_floor_normal()
-			var g = get_gravity()
-			var along_slope = g - floor_normal * g.dot(floor_normal)
-			horizontal_velocity += Vector3(along_slope.x, 0, along_slope.z) * SLIDE_SLOPE_GRAVITY * delta
+			horizontal_velocity += slope_pull * SLIDE_SLOPE_GRAVITY * delta
 			
 			# Limited sideways steering
 			if direction != Vector3.ZERO and horizontal_velocity.length() > 0.01:
