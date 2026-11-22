@@ -44,9 +44,8 @@ shadow_blur = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1977530545]
 environment = SubResource("Environment_mihb8")
 
-[node name="Player" parent="." unique_id=1333248885 node_paths=PackedStringArray("start_at_checkpoint") instance=ExtResource("3_didps")]
+[node name="Player" parent="." unique_id=1333248885 instance=ExtResource("3_didps")]
 transform = Transform3D(1.589326e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, 1.589326e-08, 20.252705, 1, 2.0187893)
-start_at_checkpoint = NodePath("../Checkpoint2")
 
 [node name="Environment" type="Node3D" parent="." unique_id=1126964663]
 
@@ -442,6 +441,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 45, 84)
 
 [node name="Finish" parent="." unique_id=426082015 instance=ExtResource("15_ddsyl")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 44, 89)
+next_level = "uid://cbdmib7y3bs11"
 
 [node name="Kill Zone2" parent="." unique_id=2098563 instance=ExtResource("13_pdr83")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -36, 1)

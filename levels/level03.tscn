@@ -338,6 +338,7 @@ transform = Transform3D(-9.934766e-08, 0, -1, 0, 1, 0, 1, 0, -9.934766e-08, -55,
 
 [node name="SpeedGate" parent="." unique_id=1442885233 instance=ExtResource("8_ri3il")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -74, -5, 34)
+min_speed = 10.0
 hold_time = 4.0
 
 [node name="Door Frame" parent="." unique_id=190694771 instance=ExtResource("9_dqrp8")]

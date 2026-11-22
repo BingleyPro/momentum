@@ -148,10 +148,13 @@ func _ready() -> void:
 		queue_free()
 		
 	if start_at_checkpoint:
-		start_at_checkpoint.save_puzzle_state()
+		_start_at_debug_checkpoint.call_deferred()
 		
-		activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"), start_at_checkpoint)
-		respawn()
+func _start_at_debug_checkpoint() -> void:
+	start_at_checkpoint.save_puzzle_state()
+		
+	activate_checkpoint(start_at_checkpoint.find_child("SpawnLocation").global_transform, start_at_checkpoint.get("checkpoint_number"), start_at_checkpoint)
+	respawn()
 	
 func _unhandled_input(event) -> void:
 	if finished:

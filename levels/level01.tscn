@@ -2754,7 +2754,7 @@ outputs = [NodePath("../DoorB")]
 [node name="ButtonD" parent="." unique_id=1719936494 instance=ExtResource("14_wrqhy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, -3, -46)
 type = 1
-time = 12.0
+time = 8.0
 
 [node name="Ramp4" parent="." unique_id=1399439308 instance=ExtResource("4_kxijb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -141, -102, -44)
