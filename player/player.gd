@@ -364,8 +364,13 @@ func update_hud(delta) -> void:
 	wind_sound.pitch_scale = lerpf(0.85, 1.25, wind)
 	
 func boost(direction: Vector3, amount: float, max_speed: float) -> void:
-	# boost logic
-	pass
+	direction.y = 0
+	direction = direction.normalized()
+	
+	var current = velocity.dot(direction)
+	
+	if current < max_speed:
+		velocity += direction * minf(amount, max_speed - current)
 	
 func get_slope_pull() -> Vector3:
 	var normal = get_floor_normal()
