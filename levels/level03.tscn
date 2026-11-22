@@ -590,7 +590,7 @@ outputs = [NodePath("../Door2")]
 
 [node name="Finish" parent="." unique_id=175695287 instance=ExtResource("18_873k1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -49, -12, 216)
-dev_time = 15.3
+dev_time = 13.2
 gold_time = 18.0
 silver_time = 23.0
 bronze_time = 30.0
