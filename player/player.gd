@@ -127,6 +127,7 @@ var pre_move_velocity = Vector3.ZERO
 @onready var prompt_panel: PanelContainer = $CanvasLayer/PromptPanel
 @onready var action_label: Label = $CanvasLayer/PromptPanel/HBoxContainer/ActionLabel
 @onready var canvas: CanvasLayer = $CanvasLayer
+@onready var pause_menu = $CanvasLayer/PauseMenu
 
 @onready var footstep_sound = $Footstep
 @onready var wind_sound = $Wind
@@ -148,11 +149,28 @@ func _ready() -> void:
 	wind_sound.volume_db = -80.0
 	wind_sound.play()
 	
+	pause_menu.hide()
+	pause_menu.get_node("VBoxContainer/Resume").pressed.connect(set_paused.bind(false))
+	pause_menu.get_node("VBoxContainer/Restart").pressed.connect(func():
+		get_tree().paused = false
+		get_tree().reload_current_scene())
+	pause_menu.get_node("VBoxContainer/Menu").pressed.connect(func():
+		get_tree().paused = false
+		get_tree().change_scene_to_file(MENU_SCENE))
+	
 	if not is_active:
 		queue_free()
 		
 	if start_at_checkpoint and OS.has_feature("editor"):
 		_start_at_debug_checkpoint.call_deferred()
+		
+func set_paused(value):
+	get_tree().paused = value
+	pause_menu.visible = value
+	if value:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
 func _start_at_debug_checkpoint() -> void:
 	start_at_checkpoint.save_puzzle_state()
@@ -199,9 +217,9 @@ func _unhandled_input(event) -> void:
 
 	elif Input.is_action_just_pressed("escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			set_paused(true)
 		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			set_paused(false)
 			
 	elif Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
@@ -433,7 +451,7 @@ func get_medal(time: float, medal_times: Array) -> String:
 func get_next_target(time: float, medal_times: Array) -> String:
 	for i in range(medal_times.size() -1, -1, -1):
 		if medal_times[i] > 0.0 and time > medal_times[i]:
-			return "%s: under %s" % [MEDAL_NAMES[i], format_time(medal_times[i - 1])]
+			return "%s: under %s" % [MEDAL_NAMES[i], format_time(medal_times[i])]
 	return ""
 	
 func update_movement_audio(delta) -> void:
@@ -451,7 +469,7 @@ func format_time(seconds: float) -> String:
 	return "%d:%05.2f" % [minutes, fmod(seconds, 60.0)]
 
 func _physics_process(delta):
-	if finished:
+	if finished or get_tree().paused:
 		return
 	
 	if will_launch:

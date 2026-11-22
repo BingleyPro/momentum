@@ -33,6 +33,7 @@ stream_0/weight = 2.0
 stream_1/stream = ExtResource("2_yw30f")
 
 [node name="Player" type="CharacterBody3D" unique_id=1333248885 groups=["jump_pad_activators", "plate_activators", "player"]]
+process_mode = 3
 script = ExtResource("1_oul6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=154357241]
@@ -74,6 +75,40 @@ text = "E"
 layout_mode = 2
 theme_override_font_sizes/font_size = 86
 text = "Interact"
+
+[node name="PauseMenu" type="PanelContainer" parent="CanvasLayer" unique_id=315208632]
+process_mode = 2
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu" unique_id=2068981885]
+layout_mode = 2
+theme_override_constants/separation = 146
+
+[node name="Resume" type="Button" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=1722784902]
+layout_mode = 2
+theme_override_font_sizes/font_size = 192
+text = "Resume"
+
+[node name="Restart" type="Button" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=866228795]
+layout_mode = 2
+theme_override_font_sizes/font_size = 192
+text = "Restart"
+
+[node name="Menu" type="Button" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=1774711624]
+layout_mode = 2
+theme_override_font_sizes/font_size = 192
+text = "Menu"
 
 [node name="Wind" type="AudioStreamPlayer" parent="." unique_id=1530749899]
 stream = ExtResource("2_rkbax")
