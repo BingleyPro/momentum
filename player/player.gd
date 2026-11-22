@@ -83,6 +83,7 @@ const MEDAL_NAMES = ["Dev", "Gold", "Silver", "Bronze"]
 
 const MENU_SCENE = "res://menus/main_menu.tscn"
 const BEST_TIMES_FILE = "user://best_times.cfg"
+const SETTINGS_FILE = "user://settings.cfg"
 
 var held_object: RigidBody3D = null
 var original_gravity = 1.0
@@ -129,6 +130,8 @@ var pre_move_velocity = Vector3.ZERO
 @onready var canvas: CanvasLayer = $CanvasLayer
 @onready var pause_menu = $CanvasLayer/PauseMenu
 
+@onready var sensitivity_slider = $CanvasLayer/PauseMenu/VBoxContainer/Sensitivity
+
 @onready var footstep_sound = $Footstep
 @onready var wind_sound = $Wind
 
@@ -157,12 +160,27 @@ func _ready() -> void:
 	pause_menu.get_node("VBoxContainer/Menu").pressed.connect(func():
 		get_tree().paused = false
 		get_tree().change_scene_to_file(MENU_SCENE))
+		
+	pause_menu.resume_requested.connect(set_paused.bind(false))
+	
+	var settings = ConfigFile.new()
+	settings.load(SETTINGS_FILE)
+	mouse_sensitivity = settings.get_value("controls", "mouse_sensitivity", mouse_sensitivity)
+	sensitivity_slider.value = mouse_sensitivity
+	sensitivity_slider.value_changed.connect(_on_sensitivity_changed)
 	
 	if not is_active:
 		queue_free()
 		
 	if start_at_checkpoint and OS.has_feature("editor"):
 		_start_at_debug_checkpoint.call_deferred()
+		
+func _on_sensitivity_changed(value):
+	mouse_sensitivity = value
+	var settings = ConfigFile.new()
+	settings.load(SETTINGS_FILE)
+	settings.set_value("controls", "mouse_sensitivity", value)
+	settings.save(SETTINGS_FILE)
 		
 func set_paused(value):
 	get_tree().paused = value
@@ -216,10 +234,8 @@ func _unhandled_input(event) -> void:
 			target.interact()
 
 	elif Input.is_action_just_pressed("escape"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			set_paused(true)
-		else:
-			set_paused(false)
+		set_paused(true)
+		get_viewport().set_input_as_handled()
 			
 	elif Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()

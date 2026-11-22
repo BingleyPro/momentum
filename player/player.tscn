@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cm13yd7dn1uuk"]
 
 [ext_resource type="Script" uid="uid://thqjgnukfe3" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://cf6o5kqrb5ql0" path="res://player/pause_menu.gd" id="2_qjkh3"]
 [ext_resource type="AudioStream" uid="uid://dbf5u1ajy87eu" path="res://assets/sounds/207373__klankbeeld__wind-trees-130914_02.wav" id="2_rkbax"]
 [ext_resource type="AudioStream" uid="uid://dkdw0uxlbbbt4" path="res://assets/sounds/421133__giocosound__footstep_metal_2.wav" id="2_yw30f"]
 [ext_resource type="AudioStream" uid="uid://r3mk4iqvjodp" path="res://assets/sounds/384635__morganpurkis__concrete-footstep-1.wav" id="3_yw30f"]
@@ -25,6 +26,45 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="Gradient" id="Gradient_qjkh3"]
+offsets = PackedFloat32Array(0, 0.92893404)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rgyib"]
+gradient = SubResource("Gradient_qjkh3")
+width = 80
+height = 80
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjkh3"]
+content_margin_top = 14.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 1, 1, 0.19607843)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6k8r"]
+content_margin_top = 14.0
+content_margin_bottom = 14.0
+bg_color = Color(0.92941177, 0.30588236, 0, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boad6"]
+content_margin_top = 14.0
+content_margin_bottom = 14.0
+bg_color = Color(0.92941177, 0.30588236, 0, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5yd65"]
 random_pitch = 1.0656005
 streams_count = 2
@@ -33,7 +73,6 @@ stream_0/weight = 2.0
 stream_1/stream = ExtResource("2_yw30f")
 
 [node name="Player" type="CharacterBody3D" unique_id=1333248885 groups=["jump_pad_activators", "plate_activators", "player"]]
-process_mode = 3
 script = ExtResource("1_oul6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=154357241]
@@ -78,7 +117,6 @@ text = "Interact"
 
 [node name="PauseMenu" type="PanelContainer" parent="CanvasLayer" unique_id=315208632]
 process_mode = 2
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -90,6 +128,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_qjkh3")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu" unique_id=2068981885]
 layout_mode = 2
@@ -109,6 +148,16 @@ text = "Restart"
 layout_mode = 2
 theme_override_font_sizes/font_size = 192
 text = "Menu"
+
+[node name="Sensitivity" type="HSlider" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=996850312]
+custom_minimum_size = Vector2(1200, 80)
+layout_mode = 2
+theme_override_icons/grabber = SubResource("GradientTexture2D_rgyib")
+theme_override_styles/slider = SubResource("StyleBoxFlat_qjkh3")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g6k8r")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_boad6")
+min_value = 10.0
+value = 10.0
 
 [node name="Wind" type="AudioStreamPlayer" parent="." unique_id=1530749899]
 stream = ExtResource("2_rkbax")
