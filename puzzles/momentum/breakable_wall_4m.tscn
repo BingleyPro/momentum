@@ -11,7 +11,7 @@ size = Vector3(4, 3, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac2b6"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.29803923)
+albedo_color = Color(1, 1, 1, 0.3)
 metallic = 0.25
 metallic_specular = 1.0
 roughness = 0.0

@@ -561,6 +561,7 @@ ramp_height = 5.0
 [node name="BreakableWall4" parent="." unique_id=1113484729 instance=ExtResource("4_816ur")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -47, -22, 64)
 break_speed = 18.0
+glass_type = 1
 
 [node name="BreakableWall5" parent="." unique_id=1256795589 instance=ExtResource("4_816ur")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -47, -22, 69)

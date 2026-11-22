@@ -1,4 +1,12 @@
+@tool
 extends StaticBody3D
+
+enum GlassType { NORMAL, REINFORCED }
+
+const GLASS_COLOURS = {
+	GlassType.NORMAL: Color(1, 1, 1, 0.3),
+	GlassType.REINFORCED: Color(0.086, 0.086, 0.086, 0.619)
+}
 
 signal state_update(state: bool)
 
@@ -6,6 +14,11 @@ signal state_update(state: bool)
 @export_range(1.0, 20.0, 0.5, "suffix:m/s") var break_speed = 10.0
 ## Amount of speed lost to to the object that smashes through.
 @export_range(0.0, 1.0, 0.05) var speed_loss = 0.15
+
+@export var glass_type: GlassType = GlassType.NORMAL:
+	set(value):
+		glass_type = value
+		apply_glass_type()
 
 @onready var detector = $"Detector"
 @onready var shape = $"CollisionShape3D"
@@ -19,11 +32,21 @@ var material: StandardMaterial3D
 var is_on = false
 
 func _ready():
+	material = mesh.get_surface_override_material(0).duplicate()
+	mesh.set_surface_override_material(0, material)
+	
 	label.text = "%d m/s" % int(break_speed)
-	material = mesh.get_surface_override_material(0)
+	apply_glass_type()
+	
+func apply_glass_type() -> void:
+	if not is_node_ready():
+		return
+		
+	var colour = GLASS_COLOURS[glass_type]
+	material.albedo_color = colour
 
 func _physics_process(_delta):
-	if is_on:
+	if is_on or Engine.is_editor_hint():
 		return
 	
 	for body in detector.get_overlapping_bodies():
@@ -54,7 +77,11 @@ func shatter(body, velocity):
 	if body.is_in_group("player"):
 		body.velocity.x = velocity.x * keep
 		body.velocity.z = velocity.z * keep
-		body.add_shake(0.6)
+
+		if glass_type == GlassType.NORMAL:
+			body.add_shake(0.6)
+		elif glass_type == GlassType.REINFORCED:
+			body.add_shake(1.2)
 	elif body.is_in_group("pickupable"):
 		body.linear_velocity *= keep
 		
