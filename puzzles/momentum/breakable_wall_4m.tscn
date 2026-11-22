@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://disaqc03i2f3e"]
+
+[ext_resource type="Script" uid="uid://fjhf8o31pwxe" path="res://puzzles/momentum/breakable_wall.gd" id="1_jfo2c"]
+[ext_resource type="AudioStream" uid="uid://djge3174hj2fu" path="res://assets/sounds/276939__gladkiy__breaking_glass_mirror_audio_technica_mb2k.wav" id="2_y0w7h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
+size = Vector3(4, 3, 1.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tb07l"]
+size = Vector3(4, 3, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac2b6"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.29803923)
+metallic = 0.25
+metallic_specular = 1.0
+roughness = 0.0
+ao_light_affect = 1.0
+refraction_scale = -1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ac2b6"]
+size = Vector3(4, 3, 0.2)
+
+[node name="BreakableWall" type="StaticBody3D" unique_id=1571070481]
+script = ExtResource("1_jfo2c")
+
+[node name="Detector" type="Area3D" parent="." unique_id=1501508931]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector" unique_id=152436025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -0.1)
+shape = SubResource("BoxShape3D_tb07l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1302427689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -0.1)
+mesh = SubResource("BoxMesh_tb07l")
+surface_material_override/0 = SubResource("StandardMaterial3D_ac2b6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=584967769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -0.1)
+shape = SubResource("BoxShape3D_ac2b6")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=97193038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+text = "00 m/s"
+font_size = 90
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=36759011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 0)
+stream = ExtResource("2_y0w7h")
+volume_db = 7.0

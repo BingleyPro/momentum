@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b1qqoiq2j0o8a" path="res://assets/hdris/citrus_orchard_puresky_4k.hdr" id="1_4w0vo"]
 [ext_resource type="PackedScene" uid="uid://cm13yd7dn1uuk" path="res://player/player.tscn" id="2_eu8vo"]
 [ext_resource type="PackedScene" uid="uid://yxn7jqwgodt1" path="res://building/floor_4m.tscn" id="3_5yd65"]
-[ext_resource type="PackedScene" uid="uid://7a43qqvhlqtc" path="res://puzzles/momentum/breakable_wall.tscn" id="4_eu8vo"]
+[ext_resource type="PackedScene" uid="uid://7a43qqvhlqtc" path="res://puzzles/momentum/breakable_wall_2m.tscn" id="4_eu8vo"]
 [ext_resource type="PackedScene" uid="uid://0r4m4ig7yg4f" path="res://puzzles/momentum/speed_gate.tscn" id="5_5yd65"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_y0s4v"]

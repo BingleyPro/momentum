@@ -69,7 +69,7 @@ func spawn_shards(body, velocity):
 	shard_shape.size = shard_mesh.size
 	var size = mesh.mesh.size
 	
-	for i in 30:
+	for i in 60:
 		var shard = RigidBody3D.new()
 		shard.mass = 0.1
 		shard.collision_layer = 0
@@ -91,7 +91,7 @@ func spawn_shards(body, velocity):
 		shard.linear_velocity = velocity * randf_range(0.3, 0.8) + Vector3(randf_range(-2.0, 2.0), randf_range(0.0, 3.0), randf_range(-2.0, 2.0))
 		
 		var tween = shard.create_tween()
-		tween.tween_interval(4.0)
+		tween.tween_interval(12.0)
 		tween.tween_callback(shard.queue_free)
 
 func get_checkpoint_state():
