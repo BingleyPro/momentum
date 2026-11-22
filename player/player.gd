@@ -115,6 +115,8 @@ var base_fov: float
 var hud_label: Label
 var complete_label: Label
 
+var pre_move_velocity = Vector3.ZERO
+
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/RayCast3D
@@ -584,6 +586,8 @@ func _physics_process(delta):
 	velocity.z = horizontal_velocity.z
 	
 	floor_snap_length = 1.2 if sliding else 0.5
+	
+	pre_move_velocity = velocity
 	
 	# Collisions
 	move_and_slide()

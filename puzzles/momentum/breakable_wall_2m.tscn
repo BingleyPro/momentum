@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://djge3174hj2fu" path="res://assets/sounds/276939__gladkiy__breaking_glass_mirror_audio_technica_mb2k.wav" id="2_ushr8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tb07l"]
-size = Vector3(2, 3, 1.4)
+size = Vector3(2, 3, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tb07l"]
 size = Vector3(2, 3, 0.2)

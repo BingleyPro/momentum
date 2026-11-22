@@ -30,7 +30,7 @@ func _physics_process(_delta):
 		var velocity = Vector3.ZERO
 		
 		if body.is_in_group("player"):
-			velocity = body.velocity
+			velocity = body.pre_move_velocity
 		elif body.is_in_group("pickupable"):
 			velocity = body.linear_velocity
 		else:
@@ -52,8 +52,8 @@ func shatter(body, velocity):
 	
 	var keep = 1.0 - speed_loss
 	if body.is_in_group("player"):
-		body.velocity.x *= keep
-		body.velocity.z *= keep
+		body.velocity.x = velocity.x * keep
+		body.velocity.z = velocity.z * keep
 		body.add_shake(0.6)
 	elif body.is_in_group("pickupable"):
 		body.linear_velocity *= keep
@@ -91,7 +91,7 @@ func spawn_shards(body, velocity):
 		shard.linear_velocity = velocity * randf_range(0.3, 0.8) + Vector3(randf_range(-2.0, 2.0), randf_range(0.0, 3.0), randf_range(-2.0, 2.0))
 		
 		var tween = shard.create_tween()
-		tween.tween_interval(12.0)
+		tween.tween_interval(6.0)
 		tween.tween_callback(shard.queue_free)
 
 func get_checkpoint_state():
