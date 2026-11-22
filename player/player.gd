@@ -412,7 +412,7 @@ func finish_level(next_level: String, medal_times: Array = []) -> void:
 	
 	var medal = get_medal(run_time, medal_times)
 	if not medal.is_empty():
-		text += "\n%s MEDAL" % medal
+		text += "\n%s medal" % medal
 		
 	var next_target = get_next_target(run_time, medal_times)
 	if not next_target.is_empty():
@@ -426,15 +426,13 @@ func finish_level(next_level: String, medal_times: Array = []) -> void:
 	
 func get_medal(time: float, medal_times: Array) -> String:
 	for i in medal_times.size():
-		if time <= medal_times[i]:
+		if medal_times[i] > 0.0 and time <= medal_times[i]:
 			return MEDAL_NAMES[i]
 	return ""
 	
 func get_next_target(time: float, medal_times: Array) -> String:
-	for i in medal_times.size():
-		if time > medal_times[i]:
-			if i == 0:
-				return ""
+	for i in range(medal_times.size() -1, -1, -1):
+		if medal_times[i] > 0.0 and time > medal_times[i]:
 			return "%s: under %s" % [MEDAL_NAMES[i], format_time(medal_times[i - 1])]
 	return ""
 	
