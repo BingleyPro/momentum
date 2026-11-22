@@ -132,7 +132,7 @@ var pre_move_velocity = Vector3.ZERO
 @onready var canvas: CanvasLayer = $CanvasLayer
 @onready var pause_menu = $CanvasLayer/PauseMenu
 
-@onready var sensitivity_slider = $CanvasLayer/PauseMenu/VBoxContainer/Sensitivity
+@onready var sensitivity_slider = %Sensitivity
 
 @onready var footstep_sound = $Footstep
 @onready var wind_sound = $Wind
@@ -167,9 +167,9 @@ func _ready() -> void:
 	
 	var settings = ConfigFile.new()
 	settings.load(SETTINGS_FILE)
-	var slider_value = settings.get_value("controls", "mouse_sensitivity", 50.0)
+	var slider_value = settings.get_value("controls", "sensitivity", 50.0)
 	sensitivity_slider.value = slider_value
-	mouse_sensitivity = slider_value
+	mouse_sensitivity = slider_value * SENSITIVITY_SCALE
 	sensitivity_slider.value_changed.connect(_on_sensitivity_changed)
 	
 	if not is_active:
@@ -182,7 +182,7 @@ func _on_sensitivity_changed(value):
 	mouse_sensitivity = value * SENSITIVITY_SCALE
 	var settings = ConfigFile.new()
 	settings.load(SETTINGS_FILE)
-	settings.set_value("controls", "mouse_sensitivity", value)
+	settings.set_value("controls", "sensitivity", value)
 	settings.save(SETTINGS_FILE)
 		
 func set_paused(value):
