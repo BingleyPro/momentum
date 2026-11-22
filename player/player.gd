@@ -85,6 +85,8 @@ const MENU_SCENE = "res://menus/main_menu.tscn"
 const BEST_TIMES_FILE = "user://best_times.cfg"
 const SETTINGS_FILE = "user://settings.cfg"
 
+const SENSITIVITY_SCALE = 0.00004
+
 var held_object: RigidBody3D = null
 var original_gravity = 1.0
 var original_rotation_lock = false
@@ -165,8 +167,9 @@ func _ready() -> void:
 	
 	var settings = ConfigFile.new()
 	settings.load(SETTINGS_FILE)
-	mouse_sensitivity = settings.get_value("controls", "mouse_sensitivity", mouse_sensitivity)
-	sensitivity_slider.value = mouse_sensitivity
+	var slider_value = settings.get_value("controls", "mouse_sensitivity", 50.0)
+	sensitivity_slider.value = slider_value
+	mouse_sensitivity = slider_value
 	sensitivity_slider.value_changed.connect(_on_sensitivity_changed)
 	
 	if not is_active:
@@ -176,7 +179,7 @@ func _ready() -> void:
 		_start_at_debug_checkpoint.call_deferred()
 		
 func _on_sensitivity_changed(value):
-	mouse_sensitivity = value
+	mouse_sensitivity = value * SENSITIVITY_SCALE
 	var settings = ConfigFile.new()
 	settings.load(SETTINGS_FILE)
 	settings.set_value("controls", "mouse_sensitivity", value)
