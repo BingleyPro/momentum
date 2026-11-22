@@ -14,7 +14,7 @@ func _on_body_entered(body) -> void:
 	if not enabled:
 		return
 		
-	var direction = -global_basis.z
+	var direction = global_basis.x
 	
 	if body.is_in_group("player"):
 		body.boost(direction, boost_amount, max_speed)

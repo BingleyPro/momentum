@@ -36,3 +36,5 @@ func _process(_delta):
 func _on_body_entered(body) -> void:
 	if body.is_in_group("player") and body.has_method("respawn"):
 		body.respawn()
+	elif body.is_in_group("pickupable") and body.has_method("reset_to_start"):
+		body.reset_to_start()

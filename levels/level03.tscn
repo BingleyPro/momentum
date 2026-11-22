@@ -48,7 +48,7 @@ environment = SubResource("Environment_op2ih")
 
 [node name="Player" parent="." unique_id=1333248885 node_paths=PackedStringArray("start_at_checkpoint") instance=ExtResource("2_6tpld")]
 transform = Transform3D(1.589326e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, 1.589326e-08, -0.7472954, 1, 0.018789291)
-start_at_checkpoint = NodePath("../Checkpoint")
+start_at_checkpoint = NodePath("../Checkpoint2")
 
 [node name="Floor" parent="." unique_id=1983484256 instance=ExtResource("3_6ig5j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
@@ -573,12 +573,14 @@ cooldown = 0.4
 landing_world_y = -11.0
 
 [node name="Checkpoint2" parent="." unique_id=381615070 node_paths=PackedStringArray("reset_nodes") instance=ExtResource("13_nlg5r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, -17, 40)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -49, -17, 40)
 checkpoint_number = 2
 reset_nodes = [NodePath("../BreakableWall4"), NodePath("../BreakableWall5")]
 
 [node name="BoostPad" parent="." unique_id=881706147 instance=ExtResource("18_osxv8")]
 transform = Transform3D(-4.371138e-08, 0, -0.99999994, 0, 0.9999999, 0, 0.99999994, 0, -4.371139e-08, -50.5, -22, 61)
+boost_amount = 8.0
+max_speed = 25.0
 
 [node name="LogicNode2" parent="." unique_id=830256946 node_paths=PackedStringArray("inputs", "outputs") instance=ExtResource("12_i155e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, -5, 31)

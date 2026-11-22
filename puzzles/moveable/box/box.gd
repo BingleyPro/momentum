@@ -1,6 +1,10 @@
 extends RigidBody3D
 
 var pending_reset = null
+var start_transform: Transform3D
+
+func _ready() -> void:
+	start_transform = global_transform
 
 func get_checkpoint_state():
 	return {
@@ -9,6 +13,10 @@ func get_checkpoint_state():
 	
 func restore_checkpoint_state(state) -> void:
 	pending_reset = state["transform"]
+	sleeping = false
+	
+func reset_to_restart() -> void:
+	pending_reset = start_transform
 	sleeping = false
 
 func _integrate_forces(state) -> void:
