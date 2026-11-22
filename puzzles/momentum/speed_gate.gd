@@ -93,8 +93,14 @@ func _on_body_entered(body) -> void:
 			timer.start(hold_time)
 	
 	elif not is_on:
-		# show failure
-		pass
+		label.text = "%.1f m/s" % speed
+		var tween = create_tween()
+		material.albedo_color = COLOUR_FAIL
+		tween.tween_property(material, "albedo_color", COLOUR_DEFAULT, 0.6)
+		tween.tween_callback(
+			func():
+				label.text = "%d m/s" % int(min_speed)
+		)
 		
 func _on_timeout() -> void:
 	_set_on(false)

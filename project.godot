@@ -12,6 +12,8 @@ config_version=5
 
 config/name="Momentum"
 run/main_scene="uid://ygilghvo6snn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Momentum"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

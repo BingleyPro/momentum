@@ -79,6 +79,8 @@ extends CharacterBody3D
 ## If selected, the player will start at the given checkpoint.
 @export var start_at_checkpoint: Node
 
+const MEDAL_NAMES = ["Dev", "Gold", "Silver", "Bronze"]
+
 const MENU_SCENE = "res://menus/main_menu.tscn"
 const BEST_TIMES_FILE = "user://best_times.cfg"
 
@@ -149,7 +151,7 @@ func _ready() -> void:
 	if not is_active:
 		queue_free()
 		
-	if start_at_checkpoint:
+	if start_at_checkpoint and OS.has_feature("editor"):
 		_start_at_debug_checkpoint.call_deferred()
 		
 func _start_at_debug_checkpoint() -> void:
@@ -381,7 +383,7 @@ func get_slope_pull() -> Vector3:
 	
 	return Vector3(along.x, 0, along.z)
 	
-func finish_level(next_level: String) -> void:
+func finish_level(next_level: String, medal_times: Array = []) -> void:
 	if finished:
 		return
 	finished = true
@@ -407,10 +409,34 @@ func finish_level(next_level: String) -> void:
 		
 	var text = "Level Complete!\n%s" % format_time(run_time)
 	text += "   NEW BEST!" if new_best else "   (best %s)" % format_time(best)
+	
+	var medal = get_medal(run_time, medal_times)
+	if not medal.is_empty():
+		text += "\n%s MEDAL" % medal
+		
+	var next_target = get_next_target(run_time, medal_times)
+	if not next_target.is_empty():
+		text += "\n%s" % next_target
+	
 	text += "\n\n[Space] %s    [T] Retry    [Esc] Menu" % ("Next level" if not next_level.is_empty() else "Menu")
+	
 	complete_label.text = text
 	complete_label.show()
 	prompt_panel.hide()
+	
+func get_medal(time: float, medal_times: Array) -> String:
+	for i in medal_times.size():
+		if time <= medal_times[i]:
+			return MEDAL_NAMES[i]
+	return ""
+	
+func get_next_target(time: float, medal_times: Array) -> String:
+	for i in medal_times.size():
+		if time > medal_times[i]:
+			if i == 0:
+				return ""
+			return "%s: under %s" % [MEDAL_NAMES[i], format_time(medal_times[i - 1])]
+	return ""
 	
 func update_movement_audio(delta) -> void:
 	var speed = get_horizontal_speed()

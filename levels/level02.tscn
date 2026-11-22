@@ -442,6 +442,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 45, 84)
 [node name="Finish" parent="." unique_id=426082015 instance=ExtResource("15_ddsyl")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 44, 89)
 next_level = "uid://cbdmib7y3bs11"
+gold_time = 25.0
+silver_time = 32.0
+bronze_time = 40.0
 
 [node name="Kill Zone2" parent="." unique_id=2098563 instance=ExtResource("13_pdr83")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -36, 1)

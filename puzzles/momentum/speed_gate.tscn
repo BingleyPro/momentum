@@ -30,6 +30,6 @@ mesh = SubResource("BoxMesh_ny4yr")
 one_shot = true
 
 [node name="Label" type="Label3D" parent="." unique_id=683878333]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.9, 0)
 text = "12 m/s"
 font_size = 96
