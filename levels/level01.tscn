@@ -2847,79 +2847,79 @@ floor_root = NodePath("..")
 
 [node name="GeneratedWalls" type="Node3D" parent="WallGenerator" unique_id=2004826096]
 
-[node name="Generated_N_-25_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1523499825 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-25_8m" parent="WallGenerator/GeneratedWalls" unique_id=1523499825 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, -1)
 
-[node name="Generated_N_-9_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=162563212 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-9_8m" parent="WallGenerator/GeneratedWalls" unique_id=162563212 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -1)
 
-[node name="Generated_N_-1_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1977614970 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-1_8m" parent="WallGenerator/GeneratedWalls" unique_id=1977614970 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 
-[node name="Generated_S_-29_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=507243652 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-29_8m" parent="WallGenerator/GeneratedWalls" unique_id=507243652 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -21, 0, 3)
 
-[node name="Generated_S_-21_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=890927197 instance=ExtResource("3_vxcwb")]
+[node name="Generated_S_-21_4m" parent="WallGenerator/GeneratedWalls" unique_id=890927197 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -17, 0, 3)
 
-[node name="Generated_S_-9_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1208651023 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-9_8m" parent="WallGenerator/GeneratedWalls" unique_id=1208651023 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1, 0, 3)
 
-[node name="Generated_S_-1_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=201180238 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-1_8m" parent="WallGenerator/GeneratedWalls" unique_id=201180238 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7, 0, 3)
 
-[node name="Generated_E_-1_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1236196048 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_-1_4m" parent="WallGenerator/GeneratedWalls" unique_id=1236196048 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7, 0, -1)
 
-[node name="Generated_W_-13_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1944398985 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_-13_8m" parent="WallGenerator/GeneratedWalls" unique_id=1944398985 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, -5)
 
-[node name="Generated_W_-5_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=2131089584 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_-5_8m" parent="WallGenerator/GeneratedWalls" unique_id=2131089584 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, 3)
 
-[node name="Generated_E_-13_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=544099561 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_-13_8m" parent="WallGenerator/GeneratedWalls" unique_id=544099561 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25, 0, -13)
 
-[node name="Generated_E_-5_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1197361700 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_-5_4m" parent="WallGenerator/GeneratedWalls" unique_id=1197361700 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25, 0, -5)
 
-[node name="Generated_W_3_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1583169577 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_3_8m" parent="WallGenerator/GeneratedWalls" unique_id=1583169577 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, 9, 11)
 
-[node name="Generated_E_3_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=13496792 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_3_8m" parent="WallGenerator/GeneratedWalls" unique_id=13496792 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7, 9, 3)
 
-[node name="Generated_E_11_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=187013723 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_11_4m" parent="WallGenerator/GeneratedWalls" unique_id=187013723 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7, 9, 11)
 
-[node name="Generated_S_-1_8m2" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=192816264 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-1_8m2" parent="WallGenerator/GeneratedWalls" unique_id=192816264 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7, 9, 15)
 
-[node name="Generated_N_-5_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=980270946 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-5_8m" parent="WallGenerator/GeneratedWalls" unique_id=980270946 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 9, 11)
 
-[node name="Generated_W_11_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=543169863 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_11_8m" parent="WallGenerator/GeneratedWalls" unique_id=543169863 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 9, 19)
 
-[node name="Generated_W_19_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=360023839 instance=ExtResource("3_vxcwb")]
+[node name="Generated_W_19_4m" parent="WallGenerator/GeneratedWalls" unique_id=360023839 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 9, 23)
 
-[node name="Generated_E_15_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=681934055 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_15_8m" parent="WallGenerator/GeneratedWalls" unique_id=681934055 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1, 9, 15)
 
-[node name="Generated_E_23_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1693058619 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_23_4m" parent="WallGenerator/GeneratedWalls" unique_id=1693058619 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1, 9, 23)
 
-[node name="Generated_S_-21_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1375099198 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-21_8m" parent="WallGenerator/GeneratedWalls" unique_id=1375099198 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -13, 9, 27)
 
-[node name="Generated_S_-9_8m2" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1642907889 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-9_8m2" parent="WallGenerator/GeneratedWalls" unique_id=1642907889 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1, 9, 27)
 
-[node name="Generated_N_-25_8m2" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1130232899 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-25_8m2" parent="WallGenerator/GeneratedWalls" unique_id=1130232899 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 9, 23)
 
-[node name="Generated_N_-17_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1348237578 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-17_4m" parent="WallGenerator/GeneratedWalls" unique_id=1348237578 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 9, 23)
 
 [node name="Generated_N_-17_4m2" parent="WallGenerator/GeneratedWalls" unique_id=1808456640 instance=ExtResource("3_vxcwb")]
@@ -2928,103 +2928,103 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 9, 23)
 [node name="Generated_N_-17_4m3" parent="WallGenerator/GeneratedWalls" unique_id=915867187 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -9, 9, 27)
 
-[node name="Generated_N_-9_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1277748466 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-9_4m" parent="WallGenerator/GeneratedWalls" unique_id=1277748466 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 9, 23)
 
-[node name="Generated_W_23_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1317884122 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_23_8m" parent="WallGenerator/GeneratedWalls" unique_id=1317884122 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -25, 9, 31)
 
-[node name="Generated_W_31_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=757088167 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_31_8m" parent="WallGenerator/GeneratedWalls" unique_id=757088167 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -25, 9, 39)
 
-[node name="Generated_E_27_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=277795807 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_27_8m" parent="WallGenerator/GeneratedWalls" unique_id=277795807 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -21, 9, 27)
 
-[node name="Generated_S_-25_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1882388302 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-25_8m" parent="WallGenerator/GeneratedWalls" unique_id=1882388302 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -17, 9, 39)
 
-[node name="Generated_S_-17_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=892842307 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-17_8m" parent="WallGenerator/GeneratedWalls" unique_id=892842307 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -9, 9, 39)
 
-[node name="Generated_N_-21_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1753837532 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-21_8m" parent="WallGenerator/GeneratedWalls" unique_id=1753837532 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 9, 35)
 
-[node name="Generated_N_-13_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=2052696056 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-13_4m" parent="WallGenerator/GeneratedWalls" unique_id=2052696056 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 9, 35)
 
-[node name="Generated_E_35_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=640453465 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_35_4m" parent="WallGenerator/GeneratedWalls" unique_id=640453465 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9, 9, 35)
 
-[node name="Generated_N_-13_4m2" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1163071337 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-13_4m2" parent="WallGenerator/GeneratedWalls" unique_id=1163071337 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 6, 23)
 
-[node name="Generated_W_23_4m2" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1188872502 instance=ExtResource("3_vxcwb")]
+[node name="Generated_W_23_4m2" parent="WallGenerator/GeneratedWalls" unique_id=1188872502 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -13, 6, 27)
 
-[node name="Generated_S_-13_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1147301860 instance=ExtResource("3_vxcwb")]
+[node name="Generated_S_-13_4m" parent="WallGenerator/GeneratedWalls" unique_id=1147301860 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -9, 6, 27)
 
-[node name="Generated_E_23_4m3" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1231204145 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_23_4m3" parent="WallGenerator/GeneratedWalls" unique_id=1231204145 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9, 6, 23)
 
-[node name="Generated_W_-29_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1548544510 instance=ExtResource("19_1yxjm")]
+[node name="Generated_W_-29_8m" parent="WallGenerator/GeneratedWalls" unique_id=1548544510 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, -5, -21)
 
-[node name="Generated_E_-29_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1627517262 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_-29_8m" parent="WallGenerator/GeneratedWalls" unique_id=1627517262 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25, -5, -29)
 
-[node name="Generated_W_-38_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1096930090 instance=ExtResource("3_vxcwb")]
+[node name="Generated_W_-38_4m" parent="WallGenerator/GeneratedWalls" unique_id=1096930090 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, -4, -34)
 
-[node name="Generated_E_-38_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1220279391 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_-38_4m" parent="WallGenerator/GeneratedWalls" unique_id=1220279391 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25, -4, -38)
 
-[node name="Generated_S_-49_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1552393495 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-49_8m" parent="WallGenerator/GeneratedWalls" unique_id=1552393495 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -41, -3, -42)
 
-[node name="Generated_S_-41_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=202463720 instance=ExtResource("3_vxcwb")]
+[node name="Generated_S_-41_4m" parent="WallGenerator/GeneratedWalls" unique_id=202463720 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -37, -3, -42)
 
-[node name="Generated_E_-50_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1128324941 instance=ExtResource("19_1yxjm")]
+[node name="Generated_E_-50_8m" parent="WallGenerator/GeneratedWalls" unique_id=1128324941 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25, -3, -50)
 
-[node name="Generated_N_-49_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1580424301 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-49_8m" parent="WallGenerator/GeneratedWalls" unique_id=1580424301 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49, -3, -46)
 
-[node name="Generated_N_-41_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1047902295 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-41_4m" parent="WallGenerator/GeneratedWalls" unique_id=1047902295 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, -3, -46)
 
-[node name="Generated_N_-33_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1340743475 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-33_4m" parent="WallGenerator/GeneratedWalls" unique_id=1340743475 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, -3, -46)
 
 [node name="Generated_N_-33_4m2" parent="WallGenerator/GeneratedWalls" unique_id=465676308 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -29, -3, -42)
 
-[node name="Generated_N_-29_4m4" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=272908626 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-29_4m4" parent="WallGenerator/GeneratedWalls" unique_id=272908626 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, -3, -50)
 
-[node name="Generated_W_-50_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1266963647 instance=ExtResource("3_vxcwb")]
+[node name="Generated_W_-50_4m" parent="WallGenerator/GeneratedWalls" unique_id=1266963647 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, -3, -46)
 
-[node name="Generated_N_-57_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=2066084673 instance=ExtResource("3_vxcwb")]
+[node name="Generated_N_-57_4m" parent="WallGenerator/GeneratedWalls" unique_id=2066084673 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, -2, -46)
 
-[node name="Generated_S_-57_4m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=628141844 instance=ExtResource("3_vxcwb")]
+[node name="Generated_S_-57_4m" parent="WallGenerator/GeneratedWalls" unique_id=628141844 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -53, -2, -42)
 
-[node name="Generated_N_-120_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=2020882165 instance=ExtResource("19_1yxjm")]
+[node name="Generated_N_-120_8m" parent="WallGenerator/GeneratedWalls" unique_id=2020882165 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -120, -102, -46)
 
-[node name="Generated_S_-157_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=791230200 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-157_8m" parent="WallGenerator/GeneratedWalls" unique_id=791230200 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -149, -102, -42)
 
-[node name="Generated_S_-120_8m" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=1241276962 instance=ExtResource("19_1yxjm")]
+[node name="Generated_S_-120_8m" parent="WallGenerator/GeneratedWalls" unique_id=1241276962 instance=ExtResource("19_1yxjm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -112, -102, -42)
 
-[node name="Generated_E_-46_4m5" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=813970136 instance=ExtResource("3_vxcwb")]
+[node name="Generated_E_-46_4m5" parent="WallGenerator/GeneratedWalls" unique_id=813970136 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -112, -102, -46)
 
-[node name="Generated_W_-46_4m6" type="StaticBody3D" parent="WallGenerator/GeneratedWalls" unique_id=414066859 instance=ExtResource("3_vxcwb")]
+[node name="Generated_W_-46_4m6" parent="WallGenerator/GeneratedWalls" unique_id=414066859 instance=ExtResource("3_vxcwb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -120, -102, -42)
 
 [editable path="Node3D/Floor16"]

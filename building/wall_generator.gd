@@ -18,6 +18,7 @@ const WALL_SCENES = {
 }
 
 const GRID_SIZE = 1.0
+const WALL_HEIGHT = 2.0
 
 @export_group("Generation")
 ## Floor tiles mode generates wall tiles around a given set of floors. Area mode generate walls over a specific rectangular prism based area.
@@ -34,6 +35,10 @@ const GRID_SIZE = 1.0
 
 ## The height at which walls start when using area mode.
 @export var area_base_y = 0.0
+
+@export_group("Ramp Settings")
+
+@export var ramp_root: Node3D
 
 @export_group("Actions")
 
@@ -80,6 +85,8 @@ func regenerate_walls() -> void:
 	
 	print("Wall Generator: Generated %d wall segments." % total_walls)
 		
+	if ramp_root != null:
+		generate_ramp_walls(ramp_root, generated_walls)
 		
 func generate_from_floor_tiles() -> void:
 	if floor_root == null:
@@ -315,3 +322,69 @@ func create_wall_segment(side: String, line: int, start: int, length: int, base_
 		start,
 		length
 	]
+
+func collect_ramp_shapes(node: Node, result: Array[CSGPolygon3D]) -> void:
+	if node is CSGPolygon3D:
+		var ramp = node as CSGPolygon3D
+		
+		if ramp.mode == CSGPolygon3D.MODE_DEPTH and ramp.polygon.size() == 3:
+			result.append(ramp)
+			
+	for child in node.get_children():
+		collect_ramp_shapes(child, result)
+
+func generate_ramp_walls(root: Node3D, parent: Node3D) -> void:
+	var ramps: Array[CSGPolygon3D] = []
+	collect_ramp_shapes(root, ramps)
+	
+	print("Wall Generator: Found %d ramps." % ramps.size())
+	
+	for ramp in ramps:
+		print("Processing ramp: ", ramp.get_path())
+		
+		var start: Vector2 = ramp.polygon[0]
+		var finish: Vector2 = ramp.polygon[2]
+		
+		var horizontal_length = absf(finish.x - start.x)
+		
+		if horizontal_length <= 0.001:
+			continue
+		
+		generate_ramp_side(ramp, start, horizontal_length, 0.0, parent)
+		
+		generate_ramp_side(ramp, start, horizontal_length, -ramp.depth, parent)
+
+func generate_ramp_side(ramp: CSGPolygon3D, start: Vector2, ramp_length: float, side_z: float, parent: Node3D) -> void:
+	var remaining = ramp_length
+	var current_distance = 0.0
+	
+	while remaining > 0.001:
+		var segment_length = 1
+		
+		for candidate in [8, 4, 2, 1]:
+			if candidate <= remaining + 0.001:
+				segment_length = candidate
+				break
+				
+		var wall_scene = WALL_SCENES[segment_length]
+		var wall = wall_scene.instantiate() as Node3D
+		
+		parent.add_child(wall)
+		
+		var midpoint_x = start.x + current_distance
+		
+		var ramp_local_position = Vector3(midpoint_x, 0.0, side_z)
+		
+		wall.global_position = ramp.to_global(ramp_local_position)
+		wall.global_rotation = Vector3.ZERO
+		
+		var edited_scene = get_tree().edited_scene_root
+		if edited_scene:
+			wall.owner = edited_scene
+			
+		wall.name = "RampWall_%dm" % segment_length
+		
+		print("   Generated ramp wall: ", segment_length, "m")
+		
+		current_distance += segment_length
+		remaining -= segment_length
