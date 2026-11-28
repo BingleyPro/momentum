@@ -347,16 +347,20 @@ func generate_ramp_walls(root: Node3D, parent: Node3D) -> void:
 		
 		var horizontal_length = absf(finish.x - start.x)
 		
+		var ramp_height = absf(finish.y - start.y)
+		
 		if horizontal_length <= 0.001:
 			continue
 		
-		generate_ramp_side(ramp, start, horizontal_length, 0.0, parent)
+		generate_ramp_side(ramp, start, horizontal_length, ramp_height, 0.0, true, parent)
 		
-		generate_ramp_side(ramp, start, horizontal_length, -ramp.depth, parent)
+		generate_ramp_side(ramp, start, horizontal_length, ramp_height, -ramp.depth, false, parent)
 
-func generate_ramp_side(ramp: CSGPolygon3D, start: Vector2, ramp_length: float, side_z: float, parent: Node3D) -> void:
+func generate_ramp_side(ramp: CSGPolygon3D, start: Vector2, ramp_length: float, ramp_height: float, side_z: float, reverse_side: bool, parent: Node3D) -> void:
 	var remaining = ramp_length
 	var current_distance = 0.0
+	
+	var rows = maxi(1, ceili(ramp_height / WALL_HEIGHT))
 	
 	while remaining > 0.001:
 		var segment_length = 1
@@ -367,24 +371,36 @@ func generate_ramp_side(ramp: CSGPolygon3D, start: Vector2, ramp_length: float, 
 				break
 				
 		var wall_scene = WALL_SCENES[segment_length]
-		var wall = wall_scene.instantiate() as Node3D
 		
-		parent.add_child(wall)
-		
-		var midpoint_x = start.x + current_distance
-		
-		var ramp_local_position = Vector3(midpoint_x, 0.0, side_z)
-		
-		wall.global_position = ramp.to_global(ramp_local_position)
-		wall.global_rotation = Vector3.ZERO
-		
-		var edited_scene = get_tree().edited_scene_root
-		if edited_scene:
-			wall.owner = edited_scene
+		for row in range(rows):
+			var wall = wall_scene.instantiate() as Node3D
+			parent.add_child(wall)
 			
-		wall.name = "RampWall_%dm" % segment_length
+			var wall_start_x = start.x + current_distance
+			
+			if reverse_side:
+				wall_start_x += segment_length
 		
-		print("   Generated ramp wall: ", segment_length, "m")
+			var ramp_local_position = Vector3(
+				wall_start_x,
+				start.y + row * WALL_HEIGHT,
+				side_z
+			)
+		
+			wall.global_position = ramp.to_global(ramp_local_position)
+			
+			if reverse_side:
+				wall.global_rotation = ramp.global_rotation + Vector3(0.0, PI, 0.0)
+			else:
+				wall.global_rotation = ramp.global_rotation
+		
+			var edited_scene = get_tree().edited_scene_root
+			if edited_scene:
+				wall.owner = edited_scene
+				
+			wall.name = "RampWall_%dm_Row%d" % [segment_length, row + 1]
+		
+		print("   Generated %d ramp wall with %d rows: " % [segment_length, rows])
 		
 		current_distance += segment_length
 		remaining -= segment_length
