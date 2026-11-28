@@ -576,7 +576,7 @@ landing_world_y = -11.0
 [node name="Checkpoint2" parent="." unique_id=381615070 node_paths=PackedStringArray("reset_nodes") instance=ExtResource("13_nlg5r")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -49, -17, 40)
 checkpoint_number = 2
-reset_nodes = [NodePath("../BreakableWall4"), NodePath("../BreakableWall5")]
+reset_nodes = [NodePath("../BreakableWall4"), NodePath("../BreakableWall5"), NodePath("../Box"), NodePath("../SpeedGate2"), NodePath("../SpeedGate")]
 
 [node name="BoostPad" parent="." unique_id=881706147 instance=ExtResource("18_osxv8")]
 transform = Transform3D(-4.371138e-08, 0, -0.99999994, 0, 0.9999999, 0, 0.99999994, 0, -4.371139e-08, -50.5, -22, 61)
